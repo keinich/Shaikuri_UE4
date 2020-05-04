@@ -7,11 +7,13 @@
 #include "GameFramework/Actor.h"
 #include "Components/StaticMeshComponent.h"
 
-// My Includes
-#include "BoardCell.h"
+// Game Includes
 
 // LAST Include
 #include "Board.generated.h"
+
+// Forward Declarations
+class UBoardCellComponent;
 
 UCLASS()
 class SHAIKURI_API ABoard : public AActor {
@@ -43,12 +45,27 @@ public:
 
 public: // UFunctions
 
+  FVector2D GetCellCoordinatesFromLocation3D(FVector location3D);
+
+  void SetCellSelected(bool isSelected, int x, int y);
+
+  UBoardCellComponent* GetBoardCell(int x, int y);
+
 public: // UProperties
 
 protected: // UFunctions
 
   UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
     void ConstructGridcell(FTransform transform);
+
+  UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    UBoardCellComponent* ConstructGridcell1(FTransform transform);
+
+  UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void SetCellSelectedMesh(class UBoardCellComponent* boardCellComponent);
+
+  UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void SetCellUnselectedMesh(class UBoardCellComponent* boardCellComponent);
 
 protected: // UProperties  
 
@@ -61,6 +78,9 @@ protected: // UProperties
   UPROPERTY(EditDefaultsOnly, Category = "Board")
     int NumberCellsY = 5;
 
+  UPROPERTY(EditDefaultsOnly, Category = "Board")
+    TArray<UBoardCellComponent*> _BoardCells;
+
 protected: // Functions
 
 protected: // Fields
@@ -70,5 +90,6 @@ private: // Functions
   void RecreateGrid();
 
 private: // Fields
+
 
 };

@@ -38,8 +38,9 @@ private: // Functions
   void OnLeftClick();
 
   bool TryGetLookDirection(FVector2D screenPosition, OUT FVector& lookDirection) const;
+  bool TryGetClickedActor(FVector lookDirection, OUT FHitResult& hitResult) const;
 
-  bool TryGetClickedActor(FVector lookDirection, OUT TWeakObjectPtr<AActor> &hitActor) const;
+  void HandleClickOnBoard(class ABoard* board, FVector locationOfClick3D);
 
 private: // Fields  
 

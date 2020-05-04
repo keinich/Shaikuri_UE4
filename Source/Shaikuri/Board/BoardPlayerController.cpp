@@ -40,12 +40,13 @@ void ABoardPlayerController::OnLeftClick() {
   FVector lookDirection;
   if (TryGetLookDirection(screenLocationOfCrosshair, OUT lookDirection)) {
     // Line-Trace along that look direction and see waht we hit (up to max range)
-    TWeakObjectPtr<AActor> hitActor = nullptr;
-    bool hitSomething = (TryGetClickedActor(lookDirection, OUT hitActor));
+    FHitResult hitResult;
+    bool hitSomething = (TryGetClickedActor(lookDirection, OUT hitResult));
     if (hitSomething) {
-      ABoard* hitBoard = Cast<ABoard, AActor>(hitActor.Get());
+      ABoard* hitBoard = Cast<ABoard, AActor>(hitResult.Actor.Get());
       if (hitBoard) {
         GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Board was hit"));
+        HandleClickOnBoard(hitBoard, hitResult.Location);
       }
     }
   }
@@ -68,8 +69,7 @@ bool ABoardPlayerController::TryGetLookDirection(
   );
 }
 
-bool ABoardPlayerController::TryGetClickedActor(FVector lookDirection, OUT TWeakObjectPtr<AActor> &hitActor) const {
-  FHitResult hitResult;
+bool ABoardPlayerController::TryGetClickedActor(FVector lookDirection, OUT FHitResult& hitResult) const {
   FVector startLocation = PlayerCameraManager->GetCameraLocation();
   FVector endLocation = startLocation + (lookDirection * 1000000.0f);
   FCollisionObjectQueryParams params = FCollisionObjectQueryParams();
@@ -81,10 +81,14 @@ bool ABoardPlayerController::TryGetClickedActor(FVector lookDirection, OUT TWeak
       ECC_Camera
     )
     ) {
-    hitActor = hitResult.Actor;
     return true;
   }
   else {
     return false;
   }
+}
+
+void ABoardPlayerController::HandleClickOnBoard(ABoard* board, FVector locationOfClick3D) {
+  FVector2D cellCoordinates = board->GetCellCoordinatesFromLocation3D(locationOfClick3D);
+  board->SetCellSelected(true, cellCoordinates.X, cellCoordinates.Y);
 }
