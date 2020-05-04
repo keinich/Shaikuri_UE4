@@ -8,7 +8,7 @@
 ABoardPawn::ABoardPawn() {
 
   SpringArm = CreateDefaultSubobject<USpringArmComponent>("Spring Arm");
-  SpringArm->SetupAttachment(GetMeshComponent());  
+  SpringArm->SetupAttachment(RootComponent);  
   Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
   Camera->SetupAttachment(SpringArm);
 

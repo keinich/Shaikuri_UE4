@@ -4,10 +4,87 @@
 
 // Engine Includes
 
+#include "Engine/World.h"
+#include "Engine/Engine.h"
+
 // Game Includes
+
+#include "Board.h"
 
 #pragma region Engine Callbacks
 
-void ABoardPlayerController::BeginPlay() {}
+void ABoardPlayerController::BeginPlay() {
+  Super::BeginPlay();
+
+  InputComponent->BindAction("LeftClick", EInputEvent::IE_Released, this, &ABoardPlayerController::OnLeftClick);
+}
 
 #pragma endregion
+
+void ABoardPlayerController::OnLeftClick() {
+
+  int32 ViewportSizeX, ViewportSizeY;
+  GetViewportSize(ViewportSizeX, ViewportSizeY);
+  float mousePositionX;
+  float mousePositionY;
+  bool gotMousePosition = GetMousePosition(mousePositionX, mousePositionY);
+  if (!gotMousePosition) {
+    return;
+  }
+
+  FVector2D screenLocationOfCrosshair = FVector2D(
+    mousePositionX, mousePositionY
+  );
+
+  // "De-project" the screen position of the crosshair to a world direction
+  FVector lookDirection;
+  if (TryGetLookDirection(screenLocationOfCrosshair, OUT lookDirection)) {
+    // Line-Trace along that look direction and see waht we hit (up to max range)
+    TWeakObjectPtr<AActor> hitActor = nullptr;
+    bool hitSomething = (TryGetClickedActor(lookDirection, OUT hitActor));
+    if (hitSomething) {
+      ABoard* hitBoard = Cast<ABoard, AActor>(hitActor.Get());
+      if (hitBoard) {
+        GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Board was hit"));
+      }
+    }
+  }
+  else {
+    return;
+  }
+
+}
+
+bool ABoardPlayerController::TryGetLookDirection(
+  FVector2D screenPosition,
+  OUT FVector& lookDirection
+) const {
+  FVector worldPositionOfCrossHairOnViewCamera; // To be discarded
+  return DeprojectScreenPositionToWorld(
+    screenPosition.X,
+    screenPosition.Y,
+    OUT worldPositionOfCrossHairOnViewCamera,
+    OUT lookDirection
+  );
+}
+
+bool ABoardPlayerController::TryGetClickedActor(FVector lookDirection, OUT TWeakObjectPtr<AActor> &hitActor) const {
+  FHitResult hitResult;
+  FVector startLocation = PlayerCameraManager->GetCameraLocation();
+  FVector endLocation = startLocation + (lookDirection * 1000000.0f);
+  FCollisionObjectQueryParams params = FCollisionObjectQueryParams();
+  if (
+    GetWorld()->LineTraceSingleByChannel(
+      hitResult,
+      startLocation,
+      endLocation,
+      ECC_Camera
+    )
+    ) {
+    hitActor = hitResult.Actor;
+    return true;
+  }
+  else {
+    return false;
+  }
+}

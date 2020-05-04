@@ -15,7 +15,7 @@ class SHAIKURI_API ABoardPlayerController : public APlayerController {
 
 #pragma region Engine Callbacks
 
-protected:
+public:
 
   virtual void BeginPlay() override;
 
@@ -34,6 +34,12 @@ protected: // Functions
 protected: // Fields
 
 private: // Functions
+
+  void OnLeftClick();
+
+  bool TryGetLookDirection(FVector2D screenPosition, OUT FVector& lookDirection) const;
+
+  bool TryGetClickedActor(FVector lookDirection, OUT TWeakObjectPtr<AActor> &hitActor) const;
 
 private: // Fields  
 
