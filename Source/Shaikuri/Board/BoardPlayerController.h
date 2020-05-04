@@ -21,7 +21,7 @@ protected:
 
 #pragma endregion
 
-  // public: UFunctions
+public: // UFunctions
 
 public: // UProperties
 
@@ -35,6 +35,6 @@ protected: // Fields
 
 private: // Functions
 
-private: // Fields
+private: // Fields  
 
 };

@@ -4,40 +4,36 @@
 
 // Engine Includes
 #include "CoreMinimal.h"
-#include "GameFramework/Pawn.h"
+#include "GameFramework/DefaultPawn.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 
-// Last Include!!
-#include "BoardActor.generated.h"
+// Last Include
+#include "BoardPawn.generated.h"
 
+/**
+ *
+ */
 UCLASS()
-class SHAIKURI_API ABoardActor : public APawn {
+class SHAIKURI_API ABoardPawn : public ADefaultPawn {
   GENERATED_BODY()
 
 #pragma region Engine Callbacks
 
 public:
-  // Sets default values for this pawn's properties
-  ABoardActor();
 
-  // Called every frame
-  virtual void Tick(float DeltaTime) override;
-
-  // Called to bind functionality to input
-  virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+  ABoardPawn();
 
 protected:
-  // Called when the game starts or when spawned
-  virtual void BeginPlay() override;
+
+    virtual void SetupPlayerInputComponent(UInputComponent* InInputComponent) override;
 
 #pragma endregion
 
 #pragma region Components
 
-  UPROPERTY(EditDefaultsOnly, category = "Camera")
+    UPROPERTY(EditDefaultsOnly, category = "Camera")
     USpringArmComponent* SpringArm;
-
 
   UPROPERTY(EditDefaultsOnly, category = "Camera")
     UCameraComponent* Camera;
@@ -58,9 +54,5 @@ protected: // Fields
 
 private: // Functions
 
-  void TurnCamera(float axisValue);
-  void LookUp(float axisValue);
-
 private: // Fields
-
 };
