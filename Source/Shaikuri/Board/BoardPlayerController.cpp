@@ -90,5 +90,5 @@ bool ABoardPlayerController::TryGetClickedActor(FVector lookDirection, OUT FHitR
 
 void ABoardPlayerController::HandleClickOnBoard(ABoard* board, FVector locationOfClick3D) {
   FVector2D cellCoordinates = board->GetCellCoordinatesFromLocation3D(locationOfClick3D);
-  board->SetCellSelected(true, cellCoordinates.X, cellCoordinates.Y);
+  board->SelectCell(cellCoordinates.X, cellCoordinates.Y);
 }

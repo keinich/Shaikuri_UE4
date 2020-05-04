@@ -47,9 +47,10 @@ public: // UFunctions
 
   FVector2D GetCellCoordinatesFromLocation3D(FVector location3D);
 
-  void SetCellSelected(bool isSelected, int x, int y);
+  void SelectCell(int x, int y);
 
-  UBoardCellComponent* GetBoardCell(int x, int y);
+  UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    UBoardCellComponent* GetBoardCell(int x, int y);
 
 public: // UProperties
 
@@ -78,9 +79,6 @@ protected: // UProperties
   UPROPERTY(EditDefaultsOnly, Category = "Board")
     int NumberCellsY = 5;
 
-  UPROPERTY(EditDefaultsOnly, Category = "Board")
-    TArray<UBoardCellComponent*> _BoardCells;
-
 protected: // Functions
 
 protected: // Fields
@@ -89,7 +87,13 @@ private: // Functions
 
   void RecreateGrid();
 
+  bool TryGetCoordinates(FVector2D worldPositionXY, OUT FVector2D &coordinates);
+
 private: // Fields
 
+  UPROPERTY()
+    float _OuterCellRadiusCm;
 
+  UPROPERTY()
+    FVector2D _SelectedCellCoordinates = FVector2D(-1,-1);
 };
