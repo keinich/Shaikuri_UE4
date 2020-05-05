@@ -23,6 +23,12 @@ public:
 
 public: // UFunctions
 
+  UFUNCTION(BlueprintCallable, category = "Board")
+    void StartPlacingBeast();
+
+  UFUNCTION(BlueprintCallable, category = "Board")
+    void CancelPlacingBeast();
+  
 public: // UProperties
 
 protected: // UFunctions
@@ -36,12 +42,25 @@ protected: // Fields
 private: // Functions
 
   void OnLeftClick();
+  void OnRightClickStart();
+  void OnRightClickEnd();
+  void OnTurn(float axisValue);
+  void OnLookUp(float axisValue);
 
+  bool TryGetActorUnderMouse(OUT FHitResult& hitResult) const;
   bool TryGetLookDirection(FVector2D screenPosition, OUT FVector& lookDirection) const;
-  bool TryGetClickedActor(FVector lookDirection, OUT FHitResult& hitResult) const;
+  bool TryGetActorInLookDirection(FVector lookDirection, OUT FHitResult& hitResult) const;
 
+  void TryHoverCell();
+  void HoverOverCell(class ABoard* board, FVector locationOfClick3D);
   void HandleClickOnBoard(class ABoard* board, FVector locationOfClick3D);
 
 private: // Fields  
 
+  bool _IsRotating;
+
+  bool _IsPlacingBeast;
+
+  UPROPERTY()
+    class ABoard* _Board;
 };

@@ -50,9 +50,14 @@ protected: // UProperties
 
 protected: // Functions
 
+  UPROPERTY(EditDefaultsOnly, category = "Camera")
+    float ZoomSpeed = 100.0f;
+
 protected: // Fields
 
 private: // Functions
+
+  void ZoomIn(float axisValue);
 
 private: // Fields
 };

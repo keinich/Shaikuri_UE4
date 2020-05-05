@@ -48,6 +48,10 @@ public: // UFunctions
   FVector2D GetCellCoordinatesFromLocation3D(FVector location3D);
 
   void SelectCell(int x, int y);
+  void HoverCell(int x, int y);
+  void UnhoverAllCells();
+
+  void PlaceBeast(int x, int y);
 
   UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
     UBoardCellComponent* GetBoardCell(int x, int y);
@@ -66,7 +70,16 @@ protected: // UFunctions
     void SetCellSelectedMesh(class UBoardCellComponent* boardCellComponent);
 
   UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void SetCellHoveredMesh(class UBoardCellComponent* boardCellComponent);
+
+  UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
     void SetCellUnselectedMesh(class UBoardCellComponent* boardCellComponent);
+
+  UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void SetCellBasicMesh(class UBoardCellComponent* boardCellComponent);
+
+  UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void SpawnBeast(FTransform spawnTransform);
 
 protected: // UProperties  
 
@@ -96,4 +109,7 @@ private: // Fields
 
   UPROPERTY()
     FVector2D _SelectedCellCoordinates = FVector2D(-1,-1);
+
+  UPROPERTY()
+    FVector2D _HoveredCellCoordinates = FVector2D(-1, -1);
 };

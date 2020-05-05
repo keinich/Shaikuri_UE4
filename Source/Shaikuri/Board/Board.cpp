@@ -8,6 +8,7 @@
 // Engine Includes
 
 // Game Includes
+#include "Beasts/Beast.h"
 
 #include "BoardCellComponent.h"
 
@@ -116,6 +117,12 @@ void ABoard::SelectCell(int x, int y) {
     }
   }
 
+  // if we select the selected cell, we unselect it
+  if (_SelectedCellCoordinates.X == x && _SelectedCellCoordinates.Y == y) {
+    _SelectedCellCoordinates = FVector2D(-1, -1);
+    return;
+  }
+
   UBoardCellComponent* boardCellComponent = GetBoardCell(x, y);
   if (!boardCellComponent) {
     return;
@@ -123,6 +130,51 @@ void ABoard::SelectCell(int x, int y) {
 
   _SelectedCellCoordinates = FVector2D(x, y);
   SetCellSelectedMesh(boardCellComponent);
+}
+
+void ABoard::HoverCell(int x, int y) {
+
+  UnhoverAllCells();
+
+  UBoardCellComponent* boardCellComponent = GetBoardCell(x, y);
+  if (!boardCellComponent) {
+    return;
+  }
+
+  _HoveredCellCoordinates = FVector2D(x, y);
+  SetCellHoveredMesh(boardCellComponent);
+}
+
+void ABoard::UnhoverAllCells() {
+  if (_HoveredCellCoordinates.X >= 0) {
+    UBoardCellComponent* currentlyHoveredBoardCellComponent = GetBoardCell(
+      _HoveredCellCoordinates.X, _HoveredCellCoordinates.Y
+    );
+
+    if (currentlyHoveredBoardCellComponent) {
+      if (_HoveredCellCoordinates.X == _SelectedCellCoordinates.X && _HoveredCellCoordinates.Y == _SelectedCellCoordinates.Y) {
+        SetCellSelectedMesh(currentlyHoveredBoardCellComponent);
+      }
+      else {
+        SetCellBasicMesh(currentlyHoveredBoardCellComponent);
+        _HoveredCellCoordinates = FVector2D(-1, -1);
+      }
+    }
+  }
+}
+
+void ABoard::PlaceBeast(int x, int y) {
+  UBoardCellComponent* boardCellComponent = GetBoardCell(x, y);
+  if (!boardCellComponent) {
+    return;
+  }
+
+  FActorSpawnParameters spawnParams;  
+  
+  FTransform spawnTransform = boardCellComponent->GetComponentTransform();
+  spawnTransform.AddToTranslation(FVector(0.0f, 0.0f, 25.0f));
+
+  SpawnBeast(spawnTransform);
 }
 
 bool ABoard::TryGetCoordinates(FVector2D centerWorldPositionXY, OUT FVector2D& coordinates) {
