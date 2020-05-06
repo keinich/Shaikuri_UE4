@@ -100,7 +100,7 @@ private: // Functions
 
   void RecreateGrid();
 
-  bool TryGetCoordinates(FVector2D worldPositionXY, OUT FVector2D &coordinates);
+  bool TryGetCoordinates(FVector2D shiftedCenterWorldPositionXY, OUT FVector2D &coordinates);
 
 private: // Fields
 

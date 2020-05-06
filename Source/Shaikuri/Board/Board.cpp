@@ -58,6 +58,11 @@ void ABoard::RecreateGrid() {
 }
 
 FVector2D ABoard::GetCellCoordinatesFromLocation3D(FVector location3D) {
+
+  //location3D -= GetTransform().GetLocation();
+
+  location3D = GetTransform().Inverse().TransformPosition(location3D);
+
   int xWorld = (int)location3D.X;
   int yWorld = (int)location3D.Y;
   int closestXLeft = xWorld - FMath::Fmod(xWorld, (int)InnerCellRadiusCm);
@@ -177,13 +182,13 @@ void ABoard::PlaceBeast(int x, int y) {
   SpawnBeast(spawnTransform);
 }
 
-bool ABoard::TryGetCoordinates(FVector2D centerWorldPositionXY, OUT FVector2D& coordinates) {
-  bool evenRow = (FMath::Fmod(centerWorldPositionXY.Y, (int)(3 * _OuterCellRadiusCm)) == 0);
+bool ABoard::TryGetCoordinates(FVector2D shiftedCenterWorldPositionXY, OUT FVector2D& coordinates) {
+  bool evenRow = (FMath::Fmod(shiftedCenterWorldPositionXY.Y, (int)(3 * _OuterCellRadiusCm)) == 0);
   if (evenRow) {
-    if (FMath::Fmod(centerWorldPositionXY.X, (int)(2 * InnerCellRadiusCm)) == 0) {
+    if (FMath::Fmod(shiftedCenterWorldPositionXY.X, (int)(2 * InnerCellRadiusCm)) == 0) {
       coordinates = FVector2D(
-        centerWorldPositionXY.X / (int)(2 * InnerCellRadiusCm),
-        centerWorldPositionXY.Y / (int)(1.5 * _OuterCellRadiusCm)
+        shiftedCenterWorldPositionXY.X / (int)(2 * InnerCellRadiusCm),
+        shiftedCenterWorldPositionXY.Y / (int)(1.5 * _OuterCellRadiusCm)
       );
       return true;
     }
@@ -192,10 +197,10 @@ bool ABoard::TryGetCoordinates(FVector2D centerWorldPositionXY, OUT FVector2D& c
     }
   }
   else {
-    if (FMath::Fmod((centerWorldPositionXY.X - InnerCellRadiusCm), (int)(2 * InnerCellRadiusCm)) == 0) {
+    if (FMath::Fmod((shiftedCenterWorldPositionXY.X - InnerCellRadiusCm), (int)(2 * InnerCellRadiusCm)) == 0) {
       coordinates = FVector2D(
-        (centerWorldPositionXY.X - InnerCellRadiusCm) / (int)(2 * InnerCellRadiusCm),
-        centerWorldPositionXY.Y / (int)(1.5 * _OuterCellRadiusCm)
+        (shiftedCenterWorldPositionXY.X - InnerCellRadiusCm) / (int)(2 * InnerCellRadiusCm),
+        shiftedCenterWorldPositionXY.Y / (int)(1.5 * _OuterCellRadiusCm)
       );
       return true;
     }
