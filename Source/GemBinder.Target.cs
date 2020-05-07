@@ -3,11 +3,11 @@
 using UnrealBuildTool;
 using System.Collections.Generic;
 
-public class ShaikuriEditorTarget : TargetRules
+public class GemBinderTarget : TargetRules
 {
-	public ShaikuriEditorTarget(TargetInfo Target) : base(Target)
+	public GemBinderTarget (TargetInfo Target) : base(Target)
 	{
-		Type = TargetType.Editor;
+		Type = TargetType.Game;
 
 		ExtraModuleNames.AddRange( new string[] { "Shaikuri" } );
 	}

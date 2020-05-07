@@ -4,15 +4,20 @@
 #include "GBPlayerController.h"
 
 // Engine Includes
-
 #include "Engine/World.h"
 #include "Engine/Engine.h"
 
 // Game Includes
-
 #include "Board/Board.h"
+#include "Battle/PlayerFighterComponent.h"
 
 #pragma region Engine Callbacks
+
+AGBPlayerController::AGBPlayerController() {
+
+  FighterComponent = CreateDefaultSubobject<UPlayerFighterComponent>(FName("Fighter Component"));
+
+}
 
 void AGBPlayerController::BeginPlay() {
   Super::BeginPlay();
@@ -46,7 +51,6 @@ void AGBPlayerController::OnLeftClick() {
 
 }
 
-
 void AGBPlayerController::OnHoverMouse(float axisValue) {
   if (_IsPlacingBeast) {
     TryHoverCell();
@@ -61,7 +65,6 @@ void AGBPlayerController::TryHoverCell() {
     if (hitBoard) {
       //TODO think of better way to get a ref to the board...
       _Board = hitBoard;
-      GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Board was hit"));
       HoverOverCell(hitBoard, hitResult.Location);
     }
     else {

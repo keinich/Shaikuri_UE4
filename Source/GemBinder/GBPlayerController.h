@@ -17,7 +17,18 @@ class SHAIKURI_API AGBPlayerController : public APlayerController {
 
 public:
 
+  AGBPlayerController();
+
   virtual void BeginPlay() override;
+
+#pragma endregion
+
+#pragma region Components
+
+public:
+
+  UPROPERTY(EditDefaultsOnly, category = "Battle")
+    class UPlayerFighterComponent* FighterComponent;
 
 #pragma endregion
 
