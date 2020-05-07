@@ -16,15 +16,7 @@
 
 void AGBPlayerController::BeginPlay() {
   Super::BeginPlay();
-
-  InputComponent->BindAction("LeftClick", EInputEvent::IE_Released, this, &AGBPlayerController::OnLeftClick);
-  InputComponent->BindAction("RightClick", EInputEvent::IE_Pressed, this, &AGBPlayerController::OnRightClickStart);
-  InputComponent->BindAction("RightClick", EInputEvent::IE_Released, this, &AGBPlayerController::OnRightClickEnd);
-
-  InputComponent->BindAction("CancelPlacing", EInputEvent::IE_Pressed, this, &AGBPlayerController::CancelPlacingBeast);
-
-  InputComponent->BindAxis("Turn", this, &AGBPlayerController::OnTurn);
-  InputComponent->BindAxis("LookUp", this, &AGBPlayerController::OnLookUp);
+ 
 }
 
 #pragma endregion
@@ -54,26 +46,8 @@ void AGBPlayerController::OnLeftClick() {
 
 }
 
-void AGBPlayerController::OnRightClickStart() {
-  _IsRotating = true;
-}
 
-void AGBPlayerController::OnRightClickEnd() {
-  _IsRotating = false;
-}
-
-void AGBPlayerController::OnLookUp(float axisValue) {
-  if (_IsRotating) {
-    GetPawn()->AddControllerPitchInput(axisValue);
-  }
-}
-
-void AGBPlayerController::OnTurn(float axisValue) {
-
-  if (_IsRotating) {
-    GetPawn()->AddControllerYawInput(axisValue);
-  }
-
+void AGBPlayerController::OnHoverMouse(float axisValue) {
   if (_IsPlacingBeast) {
     TryHoverCell();
   }

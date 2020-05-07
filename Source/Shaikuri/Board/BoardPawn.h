@@ -58,6 +58,13 @@ protected: // Fields
 private: // Functions
 
   void ZoomIn(float axisValue);
+  void OnRightClickStart();
+  void OnRightClickEnd();
+  void OnTurn(float axisValue);
+  void OnLookUp(float axisValue);
 
 private: // Fields
+
+  bool _IsRotating;
+
 };
