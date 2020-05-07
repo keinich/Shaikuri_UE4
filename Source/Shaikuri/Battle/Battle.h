@@ -61,6 +61,7 @@ private: // Functions
 
 private: // Fields
 
-  TArray<UFighterComponent*> _Fighters;
+  UPROPERTY()
+    TArray<UFighterComponent*> _Fighters;
 
 };

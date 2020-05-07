@@ -1,11 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Engine/World.h"
-#include "UObject/ConstructorHelpers.h"
-
 #include "Board.h"
 
 // Engine Includes
+#include "Engine/World.h"
+#include "UObject/ConstructorHelpers.h"
 
 // Game Includes
 #include "Beasts/Beast.h"

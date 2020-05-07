@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "BoardGameModeBase.generated.h"
+#include "BattleGameModeBase.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class SHAIKURI_API ABoardGameModeBase : public AGameModeBase
+class SHAIKURI_API ABattleGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 	

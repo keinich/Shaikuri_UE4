@@ -27,6 +27,8 @@ void ABattle::Tick(float DeltaTime) {
 #pragma endregion
 
 void ABattle::Start(TArray<UFighterComponent*> fighters) {
+	//_Fighters = fighters;
+	//SetGameMode();
 	ShowUi();
 }
 
