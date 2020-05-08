@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BattleGameModeBase.h"
+#include "GBGameModeBase.h"
 
-void ABattleGameModeBase::SetHud(UUserWidget* hudToSet) {
-  
+void AGBGameModeBase::SetHud(UUserWidget* hudToSet) {
+
   if (CurrentHud) {
     CurrentHud->RemoveFromViewport();
   }

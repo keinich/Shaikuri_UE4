@@ -10,16 +10,15 @@
 #include "Blueprint/UserWidget.h"
 
 // Last Include
-#include "BattleGameModeBase.generated.h"
+#include "GBGameModeBase.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
-class SHAIKURI_API ABattleGameModeBase : public AGameModeBase
-{
-	GENERATED_BODY()
-	
+class SHAIKURI_API AGBGameModeBase : public AGameModeBase {
+  GENERATED_BODY()
+
 #pragma region Engine Callbacks
 
 
@@ -33,7 +32,7 @@ class SHAIKURI_API ABattleGameModeBase : public AGameModeBase
 #pragma endregion
 
 public: // UFunctions
-  
+
   UFUNCTION(BlueprintCallable)
     void SetHud(UUserWidget* hudToSet);
 

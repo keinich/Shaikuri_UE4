@@ -6,7 +6,6 @@
 #include "Kismet/GameplayStatics.h"
 
 // Game Includes
-#include "Board/BattleGameModeBase.h"
 
 #pragma region Engine Callbacks
 

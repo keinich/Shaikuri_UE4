@@ -10,7 +10,7 @@
 
 // Game Includes
 #include "Board/BoardPawn.h"
-#include "Board/BattleGameModeBase.h"
+#include "GBGameModeBase.h"
 #include "GBGameStateBase.h"
 
 #pragma region Engine Callbacks
@@ -48,7 +48,7 @@ void ABattleService::StartBattleInternal() {
   playerController->Possess(boardPawn);
 
   // Change Hud
-  ABattleGameModeBase* gameMode = (ABattleGameModeBase*)UGameplayStatics::GetGameMode(this);
+  AGBGameModeBase* gameMode = (AGBGameModeBase*)UGameplayStatics::GetGameMode(this);
   gameMode->SetHud(CreateBattleHud());
 
 }
