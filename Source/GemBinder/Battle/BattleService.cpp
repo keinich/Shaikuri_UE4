@@ -6,9 +6,12 @@
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "GameFramework/GameState.h"
+#include "Kismet/GameplayStatics.h"
 
 // Game Includes
 #include "Board/BoardPawn.h"
+#include "Board/BattleGameModeBase.h"
+#include "GBGameStateBase.h"
 
 #pragma region Engine Callbacks
 
@@ -33,19 +36,23 @@ void ABattleService::Tick(float DeltaTime) {
 
 #pragma endregion
 
-void ABattleService::StartBattle() {
+void ABattleService::StartBattleInternal() {
 
+  // Change Pawn
   APlayerController* playerController = GetWorld()->GetFirstPlayerController();
   APawn* pawn = playerController->GetPawn();
   FTransform transform = pawn->GetTransform();
-
   pawn->Destroy();
-    
   transform.AddToTranslation(FVector(0, 0, 100.0f));
   ABoardPawn* boardPawn = SpawnBoardPawn(transform);
-
   playerController->Possess(boardPawn);
+
+  // Change Hud
+  ABattleGameModeBase* gameMode = (ABattleGameModeBase*)UGameplayStatics::GetGameMode(this);
+  gameMode->SetHud(CreateBattleHud());
 
 }
 
-
+void ABattleService::StartBattle(const UObject* worldContextObject) {
+  return AGBGameStateBase::GetBattleService(worldContextObject)->StartBattleInternal();
+}

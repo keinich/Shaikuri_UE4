@@ -11,6 +11,15 @@
 // Last Include
 #include "GBGameStateBase.generated.h"
 
+// Forward Declarations
+class ABattleService;
+
+UENUM()
+enum EGemBinderGameState {
+  OpenWorld,
+  Battle
+};
+
 /**
  *
  */
@@ -35,6 +44,13 @@ public:
 
 public: // UFunctions
 
+  // Service Getter
+  UFUNCTION(BlueprintCallable, category = "Battle")
+    static ABattleService* GetBattleService(const UObject* worldContextObject);
+
+  UFUNCTION(BlueprintCallable)
+    void SetGameState(EGemBinderGameState stateToSet);
+
 public: // UProperties
 
 protected: // UFunctions
@@ -44,9 +60,10 @@ protected: // UFunctions
 
 protected: // UProperties
 
+  // Services
   UPROPERTY(BlueprintReadWrite)
-    class ABattleService* BattleService;
-
+    ABattleService* BattleService;
+    
 protected: // Functions
 
 protected: // Fields
@@ -54,5 +71,7 @@ protected: // Fields
 private: // Functions
 
 private: // Fields  
+
+  EGemBinderGameState _CurrentState;
 
 };

@@ -2,8 +2,14 @@
 
 #pragma once
 
+// Engine Includes
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Blueprint/UserWidget.h"
+
+// Game Includes
+
+// Last Include
 #include "BattleService.generated.h"
 
 UCLASS()
@@ -34,11 +40,14 @@ protected:
 public: // UFunctions
 
   UFUNCTION(BlueprintCallable, category = "Battle")
-    void StartBattle();
+    static void StartBattle(const UObject* worldContextObject);
 
 public: // UProperties
 
 protected: // UFunctions
+
+  UFUNCTION(BlueprintImplementableEvent, category = "Battle")
+    UUserWidget* CreateBattleHud();
 
 protected: // UProperties
 
@@ -47,9 +56,13 @@ protected: // Functions
   UFUNCTION(BlueprintImplementableEvent, category = "Battle")
     class ABoardPawn* SpawnBoardPawn(FTransform transform);
 
+  UFUNCTION(BlueprintCallable, category = "Battle")
+    void StartBattleInternal();
+
 protected: // Fields
 
 private: // Functions
 
 private: // Fields
+
 };
