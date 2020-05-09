@@ -48,9 +48,6 @@ public: // UProperties
 
 protected: // UFunctions
 
-  UFUNCTION(BlueprintImplementableEvent, category = "Battle")
-    void ShowUi();
-
 protected: // UProperties
 
 protected: // Functions
