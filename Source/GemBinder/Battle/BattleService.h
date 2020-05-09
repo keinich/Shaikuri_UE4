@@ -12,6 +12,11 @@
 // Last Include
 #include "BattleService.generated.h"
 
+// Forward Declarations
+
+class UFighterComponent;
+class ABattle;
+
 UCLASS()
 class SHAIKURI_API ABattleService : public AActor {
   GENERATED_BODY()
@@ -40,7 +45,7 @@ protected:
 public: // UFunctions
 
   UFUNCTION(BlueprintCallable, category = "Battle")
-    static void StartBattle(const UObject* worldContextObject);
+    static void StartBattle(TArray<UFighterComponent*> fighters, const UObject* worldContextObject);
 
 public: // UProperties
 
@@ -48,6 +53,9 @@ protected: // UFunctions
 
   UFUNCTION(BlueprintImplementableEvent, category = "Battle")
     UUserWidget* CreateBattleHud();
+
+  UFUNCTION(BlueprintImplementableEvent, category = "Battle")
+    ABattle* CreateBattle();
 
 protected: // UProperties
 
@@ -57,7 +65,7 @@ protected: // Functions
     class ABoardPawn* SpawnBoardPawn(FTransform transform);
 
   UFUNCTION(BlueprintCallable, category = "Battle")
-    void StartBattleInternal();
+    void StartBattleInternal(TArray<UFighterComponent*> fighters);
 
 protected: // Fields
 

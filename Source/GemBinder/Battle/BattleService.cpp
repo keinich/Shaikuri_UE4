@@ -12,6 +12,7 @@
 #include "Board/BoardPawn.h"
 #include "GBGameModeBase.h"
 #include "GBGameStateBase.h"
+#include "Battle.h"
 
 #pragma region Engine Callbacks
 
@@ -36,7 +37,7 @@ void ABattleService::Tick(float DeltaTime) {
 
 #pragma endregion
 
-void ABattleService::StartBattleInternal() {
+void ABattleService::StartBattleInternal(TArray<UFighterComponent*> fighters) {
 
   // Change Pawn
   APlayerController* playerController = GetWorld()->GetFirstPlayerController();
@@ -51,8 +52,12 @@ void ABattleService::StartBattleInternal() {
   AGBGameModeBase* gameMode = (AGBGameModeBase*)UGameplayStatics::GetGameMode(this);
   gameMode->SetHud(CreateBattleHud());
 
+  // Instantiate Battle
+  ABattle* battle = CreateBattle();
+  //battle->Start(fighters);
+
 }
 
-void ABattleService::StartBattle(const UObject* worldContextObject) {
-  return AGBGameStateBase::GetBattleService(worldContextObject)->StartBattleInternal();
+void ABattleService::StartBattle(TArray<UFighterComponent*> fighters, const UObject* worldContextObject) {
+  return AGBGameStateBase::GetBattleService(worldContextObject)->StartBattleInternal(fighters);
 }
