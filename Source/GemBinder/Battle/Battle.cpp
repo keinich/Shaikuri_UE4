@@ -1,7 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Battle.h"
+
+// Engine Includes
+
+// Game Includes
+#include "FighterComponent.h"
 
 #pragma region Engine Callbacks
 
@@ -28,6 +32,10 @@ void ABattle::Tick(float DeltaTime) {
 
 void ABattle::Start(TArray<UFighterComponent*> fighters) {
   _Fighters = fighters;
+
+  for (int i = 0; i < fighters.Num(); ++i) {
+    fighters[i]->DrawStartingHand();
+  }
 
 }
 

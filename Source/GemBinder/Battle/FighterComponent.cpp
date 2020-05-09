@@ -23,6 +23,10 @@ void UFighterComponent::BeginPlay()
 	
 }
 
+void UFighterComponent::DrawStartingHand() {
+
+}
+
 
 // Called every frame
 void UFighterComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)

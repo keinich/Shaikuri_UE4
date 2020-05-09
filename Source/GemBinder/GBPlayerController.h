@@ -2,8 +2,14 @@
 
 #pragma once
 
+// Engine Includes
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+
+// Game Includes
+#include "Battle/PlayerFighterComponent.h"
+
+// Last Include
 #include "GBPlayerController.generated.h"
 
 /**
@@ -28,7 +34,7 @@ public:
 public:
 
   UPROPERTY(EditDefaultsOnly, category = "Battle")
-    class UPlayerFighterComponent* FighterComponent;
+    UPlayerFighterComponent* FighterComponent;
 
 #pragma endregion
 
