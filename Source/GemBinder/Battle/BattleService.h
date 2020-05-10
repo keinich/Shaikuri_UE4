@@ -47,6 +47,9 @@ public: // UFunctions
   UFUNCTION(BlueprintCallable, category = "Battle")
     static void StartBattle(TArray<UFighterComponent*> fighters, const UObject* worldContextObject);
 
+  UFUNCTION(BlueprintCallable, category = "Battle")
+    static void StartBattlePlayerAgainstOpponents(TArray<UFighterComponent*> opponents, const UObject* worldContextObject);
+  
 public: // UProperties
 
 protected: // UFunctions

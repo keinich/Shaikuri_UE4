@@ -13,7 +13,7 @@
 ABoardPawn::ABoardPawn() {
 
   SpringArm = CreateDefaultSubobject<USpringArmComponent>("Spring Arm");
-  SpringArm->SetupAttachment(RootComponent);  
+  SpringArm->SetupAttachment(RootComponent);
   Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
   Camera->SetupAttachment(SpringArm);
 
@@ -21,7 +21,7 @@ ABoardPawn::ABoardPawn() {
 
 void ABoardPawn::SetupPlayerInputComponent(UInputComponent* InInputComponent) {
   Super::SetupPlayerInputComponent(InInputComponent);
-  
+
   AGBPlayerController* gbPlayerController = (AGBPlayerController*)(this->GetController());
 
   InInputComponent->BindAction("LeftClick", EInputEvent::IE_Released, gbPlayerController, &AGBPlayerController::OnLeftClick);
@@ -40,7 +40,7 @@ void ABoardPawn::SetupPlayerInputComponent(UInputComponent* InInputComponent) {
 #pragma endregion
 
 void ABoardPawn::ZoomIn(float axisValue) {
-  SpringArm->TargetArmLength -= ZoomSpeed * axisValue;
+  SpringArm->TargetArmLength -= ZoomSpeed * axisValue; 
 }
 
 void ABoardPawn::OnRightClickStart() {
@@ -61,4 +61,11 @@ void ABoardPawn::OnTurn(float axisValue) {
   if (_IsRotating) {
     AddControllerYawInput(axisValue);
   }
+}
+
+
+void ABoardPawn::PlaceGemInHand(AGem* gem) {
+  //gem->SetActorTransform(GetTransform());
+  _Gem = gem;
+  //gem->AttachToComponent(Hand, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 }

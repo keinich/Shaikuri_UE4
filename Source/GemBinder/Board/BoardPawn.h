@@ -7,9 +7,13 @@
 #include "GameFramework/DefaultPawn.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Components/ChildActorComponent.h"
 
 // Last Include
 #include "BoardPawn.generated.h"
+
+// Forward Declarations
+//class AGem
 
 /**
  *
@@ -42,6 +46,9 @@ protected:
 
 public: // UFunctions
 
+  UFUNCTION()
+    void PlaceGemInHand(AGem* gem);
+
 public: // UProperties
 
 protected: // UFunctions
@@ -67,4 +74,6 @@ private: // Fields
 
   bool _IsRotating;
 
+  UPROPERTY()
+    AGem* _Gem;
 };

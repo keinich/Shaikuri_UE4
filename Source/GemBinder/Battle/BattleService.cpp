@@ -13,6 +13,7 @@
 #include "GBGameModeBase.h"
 #include "GBGameStateBase.h"
 #include "Battle.h"
+#include "GBPlayerController.h"
 
 #pragma region Engine Callbacks
 
@@ -60,4 +61,15 @@ void ABattleService::StartBattleInternal(TArray<UFighterComponent*> fighters) {
 
 void ABattleService::StartBattle(TArray<UFighterComponent*> fighters, const UObject* worldContextObject) {
   return AGBGameStateBase::GetBattleService(worldContextObject)->StartBattleInternal(fighters);
+}
+
+void ABattleService::StartBattlePlayerAgainstOpponents(
+  TArray<UFighterComponent*> opponents, const UObject* worldContextObject
+) {
+
+  AGBPlayerController* playerController = (AGBPlayerController*)UGameplayStatics::GetPlayerController(worldContextObject, 0);
+  UFighterComponent* fighterComponent = playerController->FighterComponent;
+  opponents.Add(fighterComponent);
+
+  StartBattle(opponents, worldContextObject);
 }
