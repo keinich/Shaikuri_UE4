@@ -33,7 +33,7 @@ public:
 
 public:
 
-  UPROPERTY(EditDefaultsOnly, category = "Battle")
+  UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, category = "Battle")
     UPlayerFighterComponent* FighterComponent;
 
 #pragma endregion

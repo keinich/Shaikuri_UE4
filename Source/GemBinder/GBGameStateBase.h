@@ -13,6 +13,7 @@
 
 // Forward Declarations
 class ABattleService;
+class AGemService;
 
 UENUM()
 enum EGemBinderGameState {
@@ -48,6 +49,9 @@ public: // UFunctions
   UFUNCTION(BlueprintCallable, category = "Battle")
     static ABattleService* GetBattleService(const UObject* worldContextObject);
 
+  UFUNCTION(BlueprintCallable, category = "Battle")
+    static AGemService* GetGemService(const UObject* worldContextObject);
+
   UFUNCTION(BlueprintCallable)
     void SetGameState(EGemBinderGameState stateToSet);
 
@@ -63,6 +67,10 @@ protected: // UProperties
   // Services
   UPROPERTY(BlueprintReadWrite)
     ABattleService* BattleService;
+
+  // Services
+  UPROPERTY(BlueprintReadWrite)
+    AGemService* GemService;
     
 protected: // Functions
 

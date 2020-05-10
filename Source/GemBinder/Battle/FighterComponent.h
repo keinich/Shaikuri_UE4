@@ -53,6 +53,12 @@ public: // UProperties
 
 protected: // UFunctions
 
+  UFUNCTION()
+    void DrawNextGem();
+
+  UFUNCTION()
+    virtual void OnGemDrawn();
+
 protected: // UProperties
 
   UPROPERTY(EditDefaultsOnly, category = "Gem")

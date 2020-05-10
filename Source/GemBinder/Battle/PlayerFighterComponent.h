@@ -7,6 +7,7 @@
 #include "Battle/FighterComponent.h"
 
 // Game Includes
+#include "Gems/Gem.h"
 
 // Last Include
 #include "PlayerFighterComponent.generated.h"
@@ -33,20 +34,19 @@ class SHAIKURI_API UPlayerFighterComponent : public UFighterComponent {
 #pragma endregion
 
 public: // UFunctions
-    
-    virtual void DrawStartingHand() override;
+
+  virtual void DrawStartingHand() override;
 
 public: // UProperties
 
 protected: // UFunctions
 
+  virtual void OnGemDrawn() override;
+
 protected: // UProperties
-
-protected: // Functions
-
-protected: // Fields
 
 private: // Functions
 
 private: // Fields
+
 };

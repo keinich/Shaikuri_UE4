@@ -54,7 +54,7 @@ void ABattleService::StartBattleInternal(TArray<UFighterComponent*> fighters) {
 
   // Instantiate Battle
   ABattle* battle = CreateBattle();
-  //battle->Start(fighters);
+  battle->Start(fighters);
 
 }
 
