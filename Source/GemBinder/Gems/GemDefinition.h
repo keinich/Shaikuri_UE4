@@ -7,7 +7,7 @@
 // Last Include
 #include "GemDefinition.generated.h" // this must be last include in the file
 
-USTRUCT()
+USTRUCT(Blueprintable)
 struct FGemDefinition
 {
     GENERATED_USTRUCT_BODY()

@@ -18,9 +18,16 @@ void UPlayerFighterComponent::DrawStartingHand() {
 
 }
 
-void UPlayerFighterComponent::OnGemDrawn() {
-  FTransform transform;
-  AGem* gem = AGemService::SpawnGem(transform, this);
-  ABoardPawn* pawn = (ABoardPawn*)UGameplayStatics::GetPlayerPawn(this,0);
-  pawn->PlaceGemInHand(gem);
+void UPlayerFighterComponent::StartPlacingGem(FGemDefinition gemDefinition) {
+  _GemToPlace = gemDefinition;
+  _IsPlacingGem = true;
+}
+
+void UPlayerFighterComponent::AfterGemDrawn(FGemDefinition gemDefinition) {
+  //FTransform transform;
+  //AGem* gem = AGemService::SpawnGem(transform, this);
+  //ABoardPawn* pawn = (ABoardPawn*)UGameplayStatics::GetPlayerPawn(this,0);
+  //pawn->PlaceGemInHand(gem);
+
+  OnGemDrawn.Broadcast(gemDefinition);
 }

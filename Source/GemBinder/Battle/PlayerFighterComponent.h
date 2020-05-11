@@ -14,6 +14,9 @@
 
 // Forward Declarations
 
+// Delegate Declarations
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnGemDrawn, FGemDefinition, gemDefinition);
+
 /**
  *
  */
@@ -37,11 +40,17 @@ public: // UFunctions
 
   virtual void DrawStartingHand() override;
 
+  UFUNCTION(BlueprintCallable, category = "Gem")
+    void StartPlacingGem(FGemDefinition gemDefinition);
+
 public: // UProperties
 
+  UPROPERTY(BlueprintAssignable, category = "Gem")
+    FOnGemDrawn OnGemDrawn;
+  
 protected: // UFunctions
 
-  virtual void OnGemDrawn() override;
+  virtual void AfterGemDrawn(FGemDefinition gemDefinition) override;
 
 protected: // UProperties
 
@@ -49,4 +58,8 @@ private: // Functions
 
 private: // Fields
 
+  bool _IsPlacingGem;
+
+  UPROPERTY()
+    FGemDefinition _GemToPlace;
 };

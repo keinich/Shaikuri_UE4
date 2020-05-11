@@ -55,7 +55,7 @@ public: // UProperties
 protected: // UFunctions
 
   UFUNCTION(BlueprintImplementableEvent, category = "Battle")
-    UUserWidget* CreateBattleHud();
+    UUserWidget* CreateBattleHud(UPlayerFighterComponent* playerFighterComponent);
 
   UFUNCTION(BlueprintImplementableEvent, category = "Battle")
     ABattle* CreateBattle();
@@ -69,6 +69,9 @@ protected: // Functions
 
   UFUNCTION(BlueprintCallable, category = "Battle")
     void StartBattleInternal(TArray<UFighterComponent*> fighters);
+
+  UFUNCTION(BlueprintCallable, category = "Battle")
+    void StartBattlePlayerAgainsOpponentsInternal(TArray<UFighterComponent*> opponents);
 
 protected: // Fields
 

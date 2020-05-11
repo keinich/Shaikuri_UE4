@@ -40,8 +40,24 @@ void ABattleService::Tick(float DeltaTime) {
 
 void ABattleService::StartBattleInternal(TArray<UFighterComponent*> fighters) {
 
+  // Instantiate Battle
+  ABattle* battle = CreateBattle();
+  battle->Start(fighters);
+
+}
+
+void ABattleService::StartBattlePlayerAgainsOpponentsInternal(TArray<UFighterComponent*> opponents) {
+
+  // Add Player as a fighter
+  AGBPlayerController* playerController = (AGBPlayerController*)UGameplayStatics::GetPlayerController(this, 0);
+  UPlayerFighterComponent* fighterComponent = playerController->FighterComponent;
+  opponents.Add(fighterComponent);
+
+  // Create the HUD for the player
+  AGBGameModeBase* gameMode = (AGBGameModeBase*)UGameplayStatics::GetGameMode(this);
+  gameMode->SetHud(CreateBattleHud(fighterComponent));
+
   // Change Pawn
-  APlayerController* playerController = GetWorld()->GetFirstPlayerController();
   APawn* pawn = playerController->GetPawn();
   FTransform transform = pawn->GetTransform();
   pawn->Destroy();
@@ -49,14 +65,7 @@ void ABattleService::StartBattleInternal(TArray<UFighterComponent*> fighters) {
   ABoardPawn* boardPawn = SpawnBoardPawn(transform);
   playerController->Possess(boardPawn);
 
-  // Change Hud
-  AGBGameModeBase* gameMode = (AGBGameModeBase*)UGameplayStatics::GetGameMode(this);
-  gameMode->SetHud(CreateBattleHud());
-
-  // Instantiate Battle
-  ABattle* battle = CreateBattle();
-  battle->Start(fighters);
-
+  StartBattleInternal(opponents);
 }
 
 void ABattleService::StartBattle(TArray<UFighterComponent*> fighters, const UObject* worldContextObject) {
@@ -66,10 +75,5 @@ void ABattleService::StartBattle(TArray<UFighterComponent*> fighters, const UObj
 void ABattleService::StartBattlePlayerAgainstOpponents(
   TArray<UFighterComponent*> opponents, const UObject* worldContextObject
 ) {
-
-  AGBPlayerController* playerController = (AGBPlayerController*)UGameplayStatics::GetPlayerController(worldContextObject, 0);
-  UFighterComponent* fighterComponent = playerController->FighterComponent;
-  opponents.Add(fighterComponent);
-
-  StartBattle(opponents, worldContextObject);
+  AGBGameStateBase::GetBattleService(worldContextObject)->StartBattlePlayerAgainsOpponentsInternal(opponents);
 }

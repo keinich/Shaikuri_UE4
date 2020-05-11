@@ -57,7 +57,7 @@ protected: // UFunctions
     void DrawNextGem();
 
   UFUNCTION()
-    virtual void OnGemDrawn();
+    virtual void AfterGemDrawn(FGemDefinition gemDefinition);
 
 protected: // UProperties
 

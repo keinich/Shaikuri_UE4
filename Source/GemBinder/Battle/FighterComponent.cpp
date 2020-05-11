@@ -44,10 +44,10 @@ void UFighterComponent::DrawStartingHand() {
 void UFighterComponent::DrawNextGem() {
 	FGemDefinition gemDefinition = Bag.Pop();
 	_Hand.Push(gemDefinition);
-	OnGemDrawn();
+	AfterGemDrawn(gemDefinition);
 }
 
-void UFighterComponent::OnGemDrawn() {}
+void UFighterComponent::AfterGemDrawn(FGemDefinition gemDefinition) {}
 
 
 
