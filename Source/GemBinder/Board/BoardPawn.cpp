@@ -23,12 +23,15 @@ void ABoardPawn::SetupPlayerInputComponent(UInputComponent* InInputComponent) {
   Super::SetupPlayerInputComponent(InInputComponent);
 
   AGBPlayerController* gbPlayerController = (AGBPlayerController*)(this->GetController());
+  UPlayerFighterComponent* fighterComponent = gbPlayerController->FighterComponent;
 
-  InInputComponent->BindAction("LeftClick", EInputEvent::IE_Released, gbPlayerController, &AGBPlayerController::OnLeftClick);
-  InInputComponent->BindAction("CancelPlacing", EInputEvent::IE_Pressed, gbPlayerController, &AGBPlayerController::CancelPlacingBeast);
-  InInputComponent->BindAxis("LookUp", gbPlayerController, &AGBPlayerController::OnHoverMouse);
-  InInputComponent->BindAxis("Turn", gbPlayerController, &AGBPlayerController::OnHoverMouse);
+  // Interacting with the Battle
+  InInputComponent->BindAction("LeftClick", EInputEvent::IE_Released, fighterComponent, &UPlayerFighterComponent::OnLeftClick);
+  InInputComponent->BindAction("CancelPlacing", EInputEvent::IE_Pressed, fighterComponent, &UPlayerFighterComponent::CancelPlacingBeast);
+  InInputComponent->BindAxis("LookUp", fighterComponent, &UPlayerFighterComponent::OnHoverMouse);
+  InInputComponent->BindAxis("Turn", fighterComponent, &UPlayerFighterComponent::OnHoverMouse);
 
+  // 3D Navigation
   InInputComponent->BindAxis("LookUp", this, &ABoardPawn::OnLookUp);
   InInputComponent->BindAxis("Turn", this, &ABoardPawn::OnTurn);
   InInputComponent->BindAxis("ZoomIn", this, &ABoardPawn::ZoomIn);

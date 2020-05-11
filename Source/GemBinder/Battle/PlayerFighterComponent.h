@@ -43,18 +43,31 @@ public: // UFunctions
   UFUNCTION(BlueprintCallable, category = "Gem")
     void StartPlacingGem(FGemDefinition gemDefinition);
 
+  UFUNCTION(BlueprintCallable, category = "Board")
+    void StartPlacingBeast();
+
+  UFUNCTION(BlueprintCallable, category = "Board")
+    void CancelPlacingBeast();
+
+  void OnLeftClick();
+  void OnHoverMouse(float axisValue);
+
 public: // UProperties
 
   UPROPERTY(BlueprintAssignable, category = "Gem")
     FOnGemDrawn OnGemDrawn;
-  
+
 protected: // UFunctions
 
   virtual void AfterGemDrawn(FGemDefinition gemDefinition) override;
 
 protected: // UProperties
 
-private: // Functions
+private: // Functions 
+
+  void TryHoverCell();
+  void HoverOverCell(class ABoard* board, FVector locationOfClick3D);
+  void HandleClickOnBoard(class ABoard* board, FVector locationOfClick3D);
 
 private: // Fields
 
@@ -62,4 +75,7 @@ private: // Fields
 
   UPROPERTY()
     FGemDefinition _GemToPlace;
+
+  UPROPERTY()
+    class ABoard* _Board;
 };

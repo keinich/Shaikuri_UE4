@@ -40,14 +40,8 @@ public:
 
 public: // UFunctions
 
-  UFUNCTION(BlueprintCallable, category = "Board")
-    void StartPlacingBeast();
-
-  UFUNCTION(BlueprintCallable, category = "Board")
-    void CancelPlacingBeast();
-
-  void OnLeftClick();
-  void OnHoverMouse(float axisValue);
+  UFUNCTION()
+    bool TryGetActorUnderMouse(FHitResult& hitResult) const;
 
 public: // UProperties
 
@@ -59,20 +53,11 @@ protected: // Functions
 
 protected: // Fields
 
-private: // Functions
+private: // Functions 
 
-  bool TryGetActorUnderMouse(OUT FHitResult& hitResult) const;
-  bool TryGetLookDirection(FVector2D screenPosition, OUT FVector& lookDirection) const;
-  bool TryGetActorInLookDirection(FVector lookDirection, OUT FHitResult& hitResult) const;
-
-  void TryHoverCell();
-  void HoverOverCell(class ABoard* board, FVector locationOfClick3D);
-  void HandleClickOnBoard(class ABoard* board, FVector locationOfClick3D);
+  bool TryGetLookDirection(FVector2D screenPosition, FVector& lookDirection) const;
+  bool TryGetActorInLookDirection(FVector lookDirection, FHitResult& hitResult) const;
 
 private: // Fields  
 
-  bool _IsPlacingBeast;
-
-  UPROPERTY()
-    class ABoard* _Board;
 };
