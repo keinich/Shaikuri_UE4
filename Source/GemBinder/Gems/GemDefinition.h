@@ -7,7 +7,7 @@
 // Last Include
 #include "GemDefinition.generated.h" // this must be last include in the file
 
-USTRUCT(Blueprintable)
+USTRUCT(Blueprintable, BlueprintType)
 struct FGemDefinition
 {
     GENERATED_USTRUCT_BODY()
@@ -15,13 +15,13 @@ struct FGemDefinition
 
 public:
 
-  UPROPERTY(EditAnywhere, category = "Gem")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Gem")
     FName Name;
 
-  UPROPERTY(EditAnywhere, category = "Gem")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Gem")
     UTexture* Image;
 
-  UPROPERTY(EditAnywhere, category = "Gem")
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Gem")
     FString Description;
 
 };
