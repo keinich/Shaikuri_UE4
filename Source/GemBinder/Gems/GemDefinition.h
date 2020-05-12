@@ -22,6 +22,6 @@ public:
     UTexture* Image;
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Gem")
-    FString Description;
+    FText Description;
 
 };

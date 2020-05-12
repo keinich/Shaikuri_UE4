@@ -49,7 +49,7 @@ void UPlayerFighterComponent::OnHoverMouse(float axisValue) {
 void UPlayerFighterComponent::DrawStartingHand() {
 
   // Testweise kompletten Beutel ziehen
-  for (int i = 0; i < Bag.Num(); ++i) {
+  for (int i = 0; i <= Bag.Num(); ++i) {
     DrawNextGem();
   }
 
