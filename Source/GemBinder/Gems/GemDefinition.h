@@ -7,6 +7,12 @@
 // Last Include
 #include "GemDefinition.generated.h" // this must be last include in the file
 
+UENUM()
+enum class EGemType : uint8 {
+  Beast,
+  Sorcery
+};
+
 USTRUCT(Blueprintable, BlueprintType)
 struct FGemDefinition
 {
@@ -23,5 +29,11 @@ public:
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Gem")
     FText Description;
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Gem")
+    EGemType Type;
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, category = "Gem")
+  TSubclassOf<AActor> GemActorClass;
 
 };

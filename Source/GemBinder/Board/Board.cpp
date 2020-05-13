@@ -136,6 +136,21 @@ void ABoard::SelectCell(int x, int y) {
   SetCellSelectedMesh(boardCellComponent);
 }
 
+FTransform ABoard::GetCellTransform(int x, int y) {
+  UBoardCellComponent* boardCellComponent = GetBoardCell(x, y);
+  if (!boardCellComponent) {
+    return FTransform();
+  }
+
+  FActorSpawnParameters spawnParams;
+
+  FTransform result = boardCellComponent->GetComponentTransform();
+  result.AddToTranslation(FVector(0.0f, 0.0f, 25.0f));
+
+  return result;
+
+}
+
 void ABoard::HoverCell(int x, int y) {
 
   UnhoverAllCells();
@@ -167,7 +182,7 @@ void ABoard::UnhoverAllCells() {
   }
 }
 
-void ABoard::PlaceBeast(int x, int y) {
+void ABoard::PlaceBeast(AActor* beast, int x, int y) {
   UBoardCellComponent* boardCellComponent = GetBoardCell(x, y);
   if (!boardCellComponent) {
     return;
@@ -178,7 +193,9 @@ void ABoard::PlaceBeast(int x, int y) {
   FTransform spawnTransform = boardCellComponent->GetComponentTransform();
   spawnTransform.AddToTranslation(FVector(0.0f, 0.0f, 25.0f));
 
-  SpawnBeast(spawnTransform);
+  beast->SetActorTransform(spawnTransform);
+
+  //SpawnBeast(spawnTransform);
 }
 
 bool ABoard::TryGetCoordinates(FVector2D shiftedCenterWorldPositionXY, OUT FVector2D& coordinates) {

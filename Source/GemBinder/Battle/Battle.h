@@ -7,12 +7,14 @@
 #include "GameFramework/Actor.h"
 
 // Game Includes
+#include "Gems/GemDefinition.h"
 
 // Last Include
 #include "Battle.generated.h"
 
 // Forward Declarations
 class UFighterComponent;
+class ABoard;
 
 UCLASS()
 class SHAIKURI_API ABattle : public AActor {
@@ -43,6 +45,9 @@ public: // UFunctions
 
   UFUNCTION(BlueprintCallable, category = "Battle")
     void Start(TArray<UFighterComponent*> fighters);
+
+  UFUNCTION(BlueprintCallable, category = "Battle")
+    void PlaceGem(ABoard* board, FVector2D coordinates, FGemDefinition gemDefinition);
 
 public: // UProperties
 

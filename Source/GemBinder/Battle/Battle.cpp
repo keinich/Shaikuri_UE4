@@ -6,6 +6,7 @@
 
 // Game Includes
 #include "FighterComponent.h"
+#include "Board/Board.h"
 
 #pragma region Engine Callbacks
 
@@ -34,8 +35,17 @@ void ABattle::Start(TArray<UFighterComponent*> fighters) {
   _Fighters = fighters;
 
   for (int i = 0; i < fighters.Num(); ++i) {
-    fighters[i]->DrawStartingHand();
+    fighters[i]->StartBattle(this);
   }
 
+}
+
+void ABattle::PlaceGem(ABoard* board, FVector2D coordinates, FGemDefinition gemDefinition) {
+  switch (gemDefinition.Type) {
+  case EGemType::Beast:
+    FTransform transform = board->GetCellTransform(coordinates.X, coordinates.Y);    
+    AActor* beast = GetWorld()->SpawnActor(gemDefinition.GemActorClass, &transform);
+    //board->PlaceBeast(beast, coordinates.X, coordinates.Y);
+  }
 }
 

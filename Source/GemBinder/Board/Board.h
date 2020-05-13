@@ -48,10 +48,11 @@ public: // UFunctions
   FVector2D GetCellCoordinatesFromLocation3D(FVector location3D);
 
   void SelectCell(int x, int y);
+  FTransform GetCellTransform(int x, int y);
   void HoverCell(int x, int y);
   void UnhoverAllCells();
 
-  void PlaceBeast(int x, int y);
+  void PlaceBeast(AActor* beast, int x, int y);
 
   UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
     UBoardCellComponent* GetBoardCell(int x, int y);

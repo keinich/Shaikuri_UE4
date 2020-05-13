@@ -49,6 +49,9 @@ public: // UFunctions
   UFUNCTION(BlueprintCallable, category = "Board")
     void CancelPlacingBeast();
 
+  UFUNCTION(BlueprintCallable, category = "Board")
+    void CancelPlacingGem();
+
   void OnLeftClick();
   void OnHoverMouse(float axisValue);
 

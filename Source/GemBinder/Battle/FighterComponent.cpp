@@ -37,6 +37,11 @@ void UFighterComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 
 #pragma endregion
 
+void UFighterComponent::StartBattle(ABattle* battle) {
+	_Battle = battle;
+	DrawStartingHand();
+}
+
 void UFighterComponent::DrawStartingHand() {
 	// Do nothing
 }

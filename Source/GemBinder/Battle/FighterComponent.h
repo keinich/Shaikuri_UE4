@@ -13,7 +13,7 @@
 #include "FighterComponent.generated.h"
 
 // Forward Declarations
-
+class ABattle;
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class SHAIKURI_API UFighterComponent : public UActorComponent {
@@ -44,6 +44,9 @@ protected:
 public: // UFunctions
 
   UFUNCTION()
+    virtual void StartBattle(ABattle* battle);
+
+  UFUNCTION()
     virtual void DrawStartingHand();
 
 public: // UProperties
@@ -68,11 +71,13 @@ protected: // Functions
 
 protected: // Fields
 
+  UPROPERTY()
+    ABattle* _Battle;
+
 private: // Functions
 
 private: // Fields
 
   UPROPERTY(EditDefaultsOnly, category = "Gem")
     TArray<FGemDefinition> _Hand;
-
 };

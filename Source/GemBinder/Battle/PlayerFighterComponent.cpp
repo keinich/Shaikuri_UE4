@@ -12,6 +12,7 @@
 #include "Board/BoardPawn.h"
 #include "Board/Board.h"
 #include "GBPlayerController.h"
+#include "Battle.h"
 
 
 void UPlayerFighterComponent::StartPlacingBeast() {
@@ -19,6 +20,13 @@ void UPlayerFighterComponent::StartPlacingBeast() {
 }
 
 void UPlayerFighterComponent::CancelPlacingBeast() {
+  _IsPlacingGem = false;
+  if (_Board) {
+    _Board->UnhoverAllCells();
+  }
+}
+
+void UPlayerFighterComponent::CancelPlacingGem() {
   _IsPlacingGem = false;
   if (_Board) {
     _Board->UnhoverAllCells();
@@ -96,7 +104,7 @@ void UPlayerFighterComponent::HoverOverCell(ABoard* board, FVector locationOfCli
 void UPlayerFighterComponent::HandleClickOnBoard(ABoard* board, FVector locationOfClick3D) {
   FVector2D cellCoordinates = board->GetCellCoordinatesFromLocation3D(locationOfClick3D);
   if (_IsPlacingGem) {
-    board->PlaceBeast(cellCoordinates.X, cellCoordinates.Y);
+    _Battle->PlaceGem(board, cellCoordinates, _GemToPlace);
   }
   else {
     board->SelectCell(cellCoordinates.X, cellCoordinates.Y);
