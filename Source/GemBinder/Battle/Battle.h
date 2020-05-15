@@ -49,6 +49,9 @@ public: // UFunctions
   UFUNCTION(BlueprintCallable, category = "Battle")
     void PlaceGem(ABoard* board, FVector2D coordinates, FGemDefinition gemDefinition);
 
+  UFUNCTION(BlueprintCallable, category = "Battle")
+    void SubmitTurn(UFighterComponent* fighter);
+
 public: // UProperties
 
 protected: // UFunctions
@@ -61,9 +64,13 @@ protected: // Fields
 
 private: // Functions
 
+  void PassTurnToNextPlayer();
+
 private: // Fields
 
   UPROPERTY()
     TArray<UFighterComponent*> _Fighters;
 
+  UPROPERTY()
+    UFighterComponent* _FighterWhoHasTurn;
 };

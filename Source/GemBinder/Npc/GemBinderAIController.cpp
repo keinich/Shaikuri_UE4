@@ -3,3 +3,12 @@
 
 #include "GemBinderAIController.h"
 
+#pragma region Engine Callbacks
+
+AGemBinderAIController::AGemBinderAIController() {
+
+  FighterComponent = CreateDefaultSubobject<UAiFighterComponent>(FName("Fighter Component"));
+
+}
+
+#pragma endregion

@@ -38,6 +38,9 @@ void ABattle::Start(TArray<UFighterComponent*> fighters) {
     fighters[i]->StartBattle(this);
   }
 
+  _FighterWhoHasTurn = fighters[0];
+  _FighterWhoHasTurn->StartTurn();
+
 }
 
 void ABattle::PlaceGem(ABoard* board, FVector2D coordinates, FGemDefinition gemDefinition) {
@@ -47,5 +50,44 @@ void ABattle::PlaceGem(ABoard* board, FVector2D coordinates, FGemDefinition gemD
     AActor* beast = GetWorld()->SpawnActor(gemDefinition.GemActorClass, &transform);
     //board->PlaceBeast(beast, coordinates.X, coordinates.Y);
   }
+
+  // TODO move this to a SubmitTurn ?
+  PassTurnToNextPlayer();
+
+}
+
+void ABattle::SubmitTurn(UFighterComponent* fighter) {
+  int indexOfFighterWhoHasTurn = _Fighters.Find(_FighterWhoHasTurn);
+  int indexOfFighter = _Fighters.Find(fighter);
+  if (indexOfFighterWhoHasTurn == INDEX_NONE) {
+    UE_LOG(LogTemp, Error, TEXT("Couldnt find fighter who has turn"));
+    return;
+  }
+  if (indexOfFighter == INDEX_NONE) {
+    UE_LOG(LogTemp, Error, TEXT("Couldnt find fighter who wants to submit turn"));
+    return;
+  }
+  if (indexOfFighter != indexOfFighterWhoHasTurn) {
+    UE_LOG(LogTemp, Error, TEXT("Invalid fighter who wants to submit turn"));
+    return;
+  }
+
+  PassTurnToNextPlayer();
+
+}
+
+void ABattle::PassTurnToNextPlayer() {
+
+  _FighterWhoHasTurn->EndTurn();
+
+  int indexOfFighterWhoHasTurn = _Fighters.Find(_FighterWhoHasTurn); 
+
+  int newIndexOfFIghterWhoHasTurn = indexOfFighterWhoHasTurn + 1;
+  if (newIndexOfFIghterWhoHasTurn >= _Fighters.Num()) {
+    newIndexOfFIghterWhoHasTurn = 0;
+  }
+  _FighterWhoHasTurn = _Fighters[newIndexOfFIghterWhoHasTurn];
+
+  _FighterWhoHasTurn->StartTurn();
 }
 

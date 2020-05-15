@@ -49,12 +49,18 @@ public: // UFunctions
   UFUNCTION()
     virtual void DrawStartingHand();
 
-public: // UProperties
+  UFUNCTION()
+    virtual void StartTurn();
+
+  UFUNCTION()
+    virtual void EndTurn();
+
+public: // Properties
 
   UPROPERTY(EditAnywhere)
     FString Test;
 
-protected: // UFunctions
+protected: // Functions
 
   UFUNCTION()
     void DrawNextGem();
@@ -67,12 +73,12 @@ protected: // UProperties
   UPROPERTY(EditDefaultsOnly, category = "Gem")
     TArray<FGemDefinition> Bag;
 
-protected: // Functions
-
 protected: // Fields
 
   UPROPERTY()
     ABattle* _Battle;
+    
+    bool _HasTurn;
 
 private: // Functions
 

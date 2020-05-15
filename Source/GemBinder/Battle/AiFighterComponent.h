@@ -4,38 +4,37 @@
 
 // Engine Includes
 #include "CoreMinimal.h"
-#include "AIController.h"
+#include "Battle/FighterComponent.h"
 
-// Game Inculdes
-#include "Battle/AiFighterComponent.h"
+// Game Includes
 
 // Last Include
-#include "GemBinderAIController.generated.h"
+#include "AiFighterComponent.generated.h"
+
+// Forward Declarations
 
 /**
  *
  */
 UCLASS()
-class SHAIKURI_API AGemBinderAIController : public AAIController {
+class SHAIKURI_API UAiFighterComponent : public UFighterComponent {
   GENERATED_BODY()
 
 #pragma region Engine Callbacks
 
-public:
-  AGemBinderAIController();
+
 
 #pragma endregion
 
 #pragma region Components
 
-public:
 
-  UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, category = "Battle")
-    UAiFighterComponent* FighterComponent;
 
 #pragma endregion
 
 public: // UFunctions
+
+  virtual void StartTurn() override;
 
 public: // UProperties
 
@@ -43,11 +42,8 @@ protected: // UFunctions
 
 protected: // UProperties
 
-protected: // Functions
-
-protected: // Fields
-
 private: // Functions
 
 private: // Fields
+
 };

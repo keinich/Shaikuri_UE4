@@ -41,7 +41,6 @@ void UPlayerFighterComponent::OnLeftClick() {
   if (hitSomething) {
     ABoard* hitBoard = Cast<ABoard, AActor>(hitResult.Actor.Get());
     if (hitBoard) {
-      GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Board was hit"));
       HandleClickOnBoard(hitBoard, hitResult.Location);
     }
   }
@@ -54,6 +53,18 @@ void UPlayerFighterComponent::OnHoverMouse(float axisValue) {
   }
 }
 
+void UPlayerFighterComponent::StartTurn() {
+  Super::StartTurn();
+
+  OnTurnStarted.Broadcast();
+}
+
+void UPlayerFighterComponent::EndTurn() {
+  Super::EndTurn();
+
+  OnTurnEnded.Broadcast();
+}
+
 void UPlayerFighterComponent::DrawStartingHand() {
 
   // Testweise kompletten Beutel ziehen
@@ -64,6 +75,10 @@ void UPlayerFighterComponent::DrawStartingHand() {
 }
 
 void UPlayerFighterComponent::StartPlacingGem(FGemDefinition gemDefinition) {
+  if (!_HasTurn) {
+    UE_LOG(LogTemp, Warning, TEXT("Trying to place gem although not having turn"))
+    return;
+  }
   _GemToPlace = gemDefinition;
   _IsPlacingGem = true;
 }
@@ -104,6 +119,7 @@ void UPlayerFighterComponent::HoverOverCell(ABoard* board, FVector locationOfCli
 void UPlayerFighterComponent::HandleClickOnBoard(ABoard* board, FVector locationOfClick3D) {
   FVector2D cellCoordinates = board->GetCellCoordinatesFromLocation3D(locationOfClick3D);
   if (_IsPlacingGem) {
+    CancelPlacingGem();
     _Battle->PlaceGem(board, cellCoordinates, _GemToPlace);
   }
   else {

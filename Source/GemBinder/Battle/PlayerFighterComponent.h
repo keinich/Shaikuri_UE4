@@ -16,6 +16,8 @@
 
 // Delegate Declarations
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnGemDrawn, FGemDefinition, gemDefinition);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTurnStarted);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTurnEnded);
 
 /**
  *
@@ -55,10 +57,19 @@ public: // UFunctions
   void OnLeftClick();
   void OnHoverMouse(float axisValue);
 
+  virtual void StartTurn() override;
+  virtual void EndTurn() override;
+
 public: // UProperties
 
   UPROPERTY(BlueprintAssignable, category = "Gem")
     FOnGemDrawn OnGemDrawn;
+
+  UPROPERTY(BlueprintAssignable, category = "Battle")
+    FOnTurnStarted OnTurnStarted;
+
+  UPROPERTY(BlueprintAssignable, category = "Battle")
+    FOnTurnEnded OnTurnEnded;
 
 protected: // UFunctions
 
