@@ -57,21 +57,21 @@ protected: // UFunctions
   UFUNCTION(BlueprintImplementableEvent, category = "Battle")
     UUserWidget* CreateBattleHud(UPlayerFighterComponent* playerFighterComponent);
 
-  UFUNCTION(BlueprintImplementableEvent, category = "Battle")
-    class ABoardPawn* SpawnBoardPawn(FTransform transform);
-
 protected: // Properties
 
   UPROPERTY(EditDefaultsOnly, category = "Battle")
   TSubclassOf<ABattle> BattleClass;
 
   UPROPERTY(EditDefaultsOnly, category = "Battle")
-  TSubclassOf<ABoardPawn> BoardPawnClass;
+  TSubclassOf<ABoardPawn> BoardPawnClass;  
 
 private: // Functions
 
   UFUNCTION(BlueprintCallable, category = "Battle")
     ABattle* CreateBattle();
+
+  UFUNCTION(BlueprintCallable, category = "Battle")
+    class ABoardPawn* SpawnBoardPawn(FTransform transform);
 
   UFUNCTION(BlueprintCallable, category = "Battle")
     void StartBattleInternal(TArray<UFighterComponent*> fighters);

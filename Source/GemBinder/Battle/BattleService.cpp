@@ -44,6 +44,10 @@ ABattle* ABattleService::CreateBattle() {
   return battle;
 }
 
+ABoardPawn* ABattleService::SpawnBoardPawn(FTransform transform) {  
+  return GetWorld()->SpawnActor<ABoardPawn>(BoardPawnClass, transform);
+}
+
 void ABattleService::StartBattleInternal(TArray<UFighterComponent*> fighters) {
 
   // Instantiate Battle
