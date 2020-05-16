@@ -38,6 +38,12 @@ void ABattleService::Tick(float DeltaTime) {
 
 #pragma endregion
 
+ABattle* ABattleService::CreateBattle() {
+  FActorSpawnParameters spawnParameters;
+  ABattle* battle = GetWorld()->SpawnActor<ABattle>(BattleClass, spawnParameters);
+  return battle;
+}
+
 void ABattleService::StartBattleInternal(TArray<UFighterComponent*> fighters) {
 
   // Instantiate Battle
