@@ -44,15 +44,26 @@ ABattle* ABattleService::CreateBattle() {
   return battle;
 }
 
-ABoardPawn* ABattleService::SpawnBoardPawn(FTransform transform) {  
-  return GetWorld()->SpawnActor<ABoardPawn>(BoardPawnClass, transform);
+ABoardPawn* ABattleService::SpawnBoardPawn(FTransform transform) {
+  FActorSpawnParameters spawnParams;
+  spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+  return GetWorld()->SpawnActor<ABoardPawn>(BoardPawnClass, transform, spawnParams);
 }
 
-void ABattleService::StartBattleInternal(TArray<UFighterComponent*> fighters) {
+ABoard* ABattleService::SpawnBoard(FTransform transform) {
+  FActorSpawnParameters spawnParams;
+  spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+  return GetWorld()->SpawnActor<ABoard>(BoardClass, transform, spawnParams);
+}
 
+void ABattleService::StartBattleInternal(TArray<UFighterComponent*> fighters, FTransform transform) {
+
+  // Spawn Board
+  ABoard* board = SpawnBoard(transform);
+  
   // Instantiate Battle
   ABattle* battle = CreateBattle();
-  battle->Start(fighters);
+  battle->Start(fighters, board);
 
 }
 
@@ -70,16 +81,20 @@ void ABattleService::StartBattlePlayerAgainsOpponentsInternal(TArray<UFighterCom
   // Change Pawn
   APawn* pawn = playerController->GetPawn();
   FTransform transform = pawn->GetTransform();
+  FTransform transformPawn = transform;
   pawn->Destroy();
-  transform.AddToTranslation(FVector(0, 0, 100.0f));
-  ABoardPawn* boardPawn = SpawnBoardPawn(transform);
+  transformPawn.AddToTranslation(FVector(0, 0, 100.0f));
+  ABoardPawn* boardPawn = SpawnBoardPawn(transformPawn);
   playerController->Possess(boardPawn);
 
-  StartBattleInternal(opponents);
+  StartBattleInternal(opponents, transform);
 }
 
-void ABattleService::StartBattle(TArray<UFighterComponent*> fighters, const UObject* worldContextObject) {
-  return AGBGameStateBase::GetBattleService(worldContextObject)->StartBattleInternal(fighters);
+void ABattleService::StartBattle(
+  TArray<UFighterComponent*> fighters, 
+  FTransform transform,
+  const UObject* worldContextObject) {
+  return AGBGameStateBase::GetBattleService(worldContextObject)->StartBattleInternal(fighters, transform);
 }
 
 void ABattleService::StartBattlePlayerAgainstOpponents(

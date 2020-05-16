@@ -31,8 +31,9 @@ void ABattle::Tick(float DeltaTime) {
 
 #pragma endregion
 
-void ABattle::Start(TArray<UFighterComponent*> fighters) {
+void ABattle::Start(TArray<UFighterComponent*> fighters, ABoard* board) {
   _Fighters = fighters;
+  _Board = board;
 
   for (int i = 0; i < fighters.Num(); ++i) {
     fighters[i]->StartBattle(this);
@@ -46,8 +47,11 @@ void ABattle::Start(TArray<UFighterComponent*> fighters) {
 void ABattle::PlaceGem(ABoard* board, FVector2D coordinates, FGemDefinition gemDefinition) {
   switch (gemDefinition.Type) {
   case EGemType::Beast:
-    FTransform transform = board->GetCellTransform(coordinates.X, coordinates.Y);    
-    AActor* beast = GetWorld()->SpawnActor(gemDefinition.GemActorClass, &transform);
+    FTransform transform = board->GetCellTransform(coordinates.X, coordinates.Y);
+    transform.AddToTranslation(FVector(0, 0, 500));
+    FActorSpawnParameters spawnParams;
+    spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+    AActor* beast = GetWorld()->SpawnActor<AActor>(gemDefinition.GemActorClass, transform, spawnParams);
     //board->PlaceBeast(beast, coordinates.X, coordinates.Y);
   }
 
@@ -80,7 +84,7 @@ void ABattle::PassTurnToNextPlayer() {
 
   _FighterWhoHasTurn->EndTurn();
 
-  int indexOfFighterWhoHasTurn = _Fighters.Find(_FighterWhoHasTurn); 
+  int indexOfFighterWhoHasTurn = _Fighters.Find(_FighterWhoHasTurn);
 
   int newIndexOfFIghterWhoHasTurn = indexOfFighterWhoHasTurn + 1;
   if (newIndexOfFIghterWhoHasTurn >= _Fighters.Num()) {

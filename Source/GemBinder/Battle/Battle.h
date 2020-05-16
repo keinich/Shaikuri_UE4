@@ -44,7 +44,7 @@ protected:
 public: // UFunctions
 
   UFUNCTION(BlueprintCallable, category = "Battle")
-    void Start(TArray<UFighterComponent*> fighters);
+    void Start(TArray<UFighterComponent*> fighters, ABoard* board);
 
   UFUNCTION(BlueprintCallable, category = "Battle")
     void PlaceGem(ABoard* board, FVector2D coordinates, FGemDefinition gemDefinition);
@@ -70,6 +70,9 @@ private: // Fields
 
   UPROPERTY()
     TArray<UFighterComponent*> _Fighters;
+
+  UPROPERTY()
+    ABoard* _Board;
 
   UPROPERTY()
     UFighterComponent* _FighterWhoHasTurn;

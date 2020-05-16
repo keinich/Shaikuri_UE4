@@ -8,6 +8,7 @@
 #include "Blueprint/UserWidget.h"
 
 // Game Includes
+#include "Board/Board.h"
 
 // Last Include
 #include "BattleService.generated.h"
@@ -45,7 +46,11 @@ protected:
 public: // UFunctions
 
   UFUNCTION(BlueprintCallable, category = "Battle")
-    static void StartBattle(TArray<UFighterComponent*> fighters, const UObject* worldContextObject);
+    static void StartBattle(
+      TArray<UFighterComponent*> fighters,
+      FTransform transform, 
+      const UObject* worldContextObject
+  );
 
   UFUNCTION(BlueprintCallable, category = "Battle")
     static void StartBattlePlayerAgainstOpponents(TArray<UFighterComponent*> opponents, const UObject* worldContextObject);
@@ -63,7 +68,10 @@ protected: // Properties
   TSubclassOf<ABattle> BattleClass;
 
   UPROPERTY(EditDefaultsOnly, category = "Battle")
-  TSubclassOf<ABoardPawn> BoardPawnClass;  
+  TSubclassOf<ABoardPawn> BoardPawnClass;
+
+  UPROPERTY(EditDefaultsOnly, category = "Battle")
+    TSubclassOf<ABoard> BoardClass;
 
 private: // Functions
 
@@ -74,7 +82,10 @@ private: // Functions
     class ABoardPawn* SpawnBoardPawn(FTransform transform);
 
   UFUNCTION(BlueprintCallable, category = "Battle")
-    void StartBattleInternal(TArray<UFighterComponent*> fighters);
+    class ABoard* SpawnBoard(FTransform transform);
+
+  UFUNCTION(BlueprintCallable, category = "Battle")
+    void StartBattleInternal(TArray<UFighterComponent*> fighters, FTransform transform);
 
   UFUNCTION(BlueprintCallable, category = "Battle")
     void StartBattlePlayerAgainsOpponentsInternal(TArray<UFighterComponent*> opponents);
