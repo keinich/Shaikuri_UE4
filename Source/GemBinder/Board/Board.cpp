@@ -52,6 +52,7 @@ void ABoard::RecreateGrid() {
       transform.SetScale3D(FVector(InnerCellRadiusCm / 100.0f));
       UBoardCellComponent* boardCellComponent = ConstructGridcell1(transform);
       boardCellComponent->Coordinates = FVector2D(x, y);
+      _CellCoordinates.Add(FVector2D(x, y));
     }
   }
 }
@@ -182,20 +183,8 @@ void ABoard::UnhoverAllCells() {
   }
 }
 
-void ABoard::PlaceBeast(AActor* beast, int x, int y) {
-  UBoardCellComponent* boardCellComponent = GetBoardCell(x, y);
-  if (!boardCellComponent) {
-    return;
-  }
-
-  FActorSpawnParameters spawnParams;  
-  
-  FTransform spawnTransform = boardCellComponent->GetComponentTransform();
-  spawnTransform.AddToTranslation(FVector(0.0f, 0.0f, 25.0f));
-
-  beast->SetActorTransform(spawnTransform);
-
-  //SpawnBeast(spawnTransform);
+TArray<FVector2D> ABoard::GetCellCoordinates() {
+  return _CellCoordinates;
 }
 
 bool ABoard::TryGetCoordinates(FVector2D shiftedCenterWorldPositionXY, OUT FVector2D& coordinates) {

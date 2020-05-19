@@ -16,6 +16,13 @@
 class UFighterComponent;
 class ABoard;
 
+USTRUCT()
+struct FActorByInt {
+  GENERATED_USTRUCT_BODY()
+
+    TMap<int, AActor*> ActorByInt;
+};
+
 UCLASS()
 class SHAIKURI_API ABattle : public AActor {
   GENERATED_BODY()
@@ -47,10 +54,16 @@ public: // UFunctions
     void Start(TArray<UFighterComponent*> fighters, ABoard* board);
 
   UFUNCTION(BlueprintCallable, category = "Battle")
-    void PlaceGem(ABoard* board, FVector2D coordinates, FGemDefinition gemDefinition);
+    void PlaceGem(FVector2D coordinates, FGemDefinition gemDefinition);
 
   UFUNCTION(BlueprintCallable, category = "Battle")
     void SubmitTurn(UFighterComponent* fighter);
+
+  UFUNCTION(BlueprintCallable, category = "Battle")
+    AActor* GetGemActorByCoordinates(FVector2D coordinates);
+
+  UFUNCTION(BlueprintCallable, category = "Battle")
+    ABoard* GetBoard();
 
 public: // UProperties
 
@@ -66,6 +79,8 @@ private: // Functions
 
   void PassTurnToNextPlayer();
 
+  void AddGemActorToCoordinates(FVector2D coordinates, AActor* actor);
+
 private: // Fields
 
   UPROPERTY()
@@ -76,4 +91,7 @@ private: // Fields
 
   UPROPERTY()
     UFighterComponent* _FighterWhoHasTurn;
+
+  UPROPERTY()
+    TMap<int, FActorByInt> _GemActorsByCoordinates;
 };

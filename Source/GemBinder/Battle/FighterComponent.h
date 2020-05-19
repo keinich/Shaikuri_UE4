@@ -80,10 +80,10 @@ protected: // Fields
     
     bool _HasTurn;
 
+    UPROPERTY(EditDefaultsOnly, category = "Gem")
+      TArray<FGemDefinition> _Hand;
+
 private: // Functions
 
 private: // Fields
-
-  UPROPERTY(EditDefaultsOnly, category = "Gem")
-    TArray<FGemDefinition> _Hand;
 };

@@ -66,11 +66,7 @@ void UPlayerFighterComponent::EndTurn() {
 }
 
 void UPlayerFighterComponent::DrawStartingHand() {
-
-  // Testweise kompletten Beutel ziehen
-  for (int i = 0; i <= Bag.Num(); ++i) {
-    DrawNextGem();
-  }
+  Super::DrawStartingHand();
 
 }
 
@@ -120,7 +116,8 @@ void UPlayerFighterComponent::HandleClickOnBoard(ABoard* board, FVector location
   FVector2D cellCoordinates = board->GetCellCoordinatesFromLocation3D(locationOfClick3D);
   if (_IsPlacingGem) {
     CancelPlacingGem();
-    _Battle->PlaceGem(board, cellCoordinates, _GemToPlace);
+    _Battle->PlaceGem(cellCoordinates, _GemToPlace);
+    _Battle->SubmitTurn(this);
   }
   else {
     board->SelectCell(cellCoordinates.X, cellCoordinates.Y);

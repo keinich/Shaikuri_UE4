@@ -5,10 +5,19 @@
 
 // Game Includes
 #include "Battle.h"
+#include "Board/Board.h"
 
 void UAiFighterComponent::StartTurn() {
   Super::StartTurn();
 
-  _Battle->SubmitTurn(this);
+  TArray<FVector2D> coordinates = _Battle->GetBoard()->GetCellCoordinates();
+
+  for (int i = 0; i < coordinates.Num(); ++i) {
+    if (!_Battle->GetGemActorByCoordinates(coordinates[i])) {
+      _Battle->PlaceGem(coordinates[i], _Hand[0]);
+      _Battle->SubmitTurn(this);
+      return;
+    }
+  }
 
 }

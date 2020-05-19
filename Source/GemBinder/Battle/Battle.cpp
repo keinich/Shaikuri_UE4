@@ -44,20 +44,27 @@ void ABattle::Start(TArray<UFighterComponent*> fighters, ABoard* board) {
 
 }
 
-void ABattle::PlaceGem(ABoard* board, FVector2D coordinates, FGemDefinition gemDefinition) {
+void ABattle::PlaceGem(FVector2D coordinates, FGemDefinition gemDefinition) {
+
+  if (GetGemActorByCoordinates(coordinates)) {
+    UE_LOG(LogTemp, Warning, TEXT("There is already a Gem on theses coordinates"));
+    return;
+  }
+
+  AActor* gemActor = nullptr;
+
   switch (gemDefinition.Type) {
   case EGemType::Beast:
-    FTransform transform = board->GetCellTransform(coordinates.X, coordinates.Y);
+    FTransform transform = _Board->GetCellTransform(coordinates.X, coordinates.Y);
     transform.AddToTranslation(FVector(0, 0, 500));
     FActorSpawnParameters spawnParams;
     spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-    AActor* beast = GetWorld()->SpawnActor<AActor>(gemDefinition.GemActorClass, transform, spawnParams);
-    //board->PlaceBeast(beast, coordinates.X, coordinates.Y);
+    gemActor = GetWorld()->SpawnActor<AActor>(gemDefinition.GemActorClass, transform, spawnParams);
   }
 
-  // TODO move this to a SubmitTurn ?
-  PassTurnToNextPlayer();
-
+  if (gemActor) {
+    AddGemActorToCoordinates(coordinates, gemActor);
+  }
 }
 
 void ABattle::SubmitTurn(UFighterComponent* fighter) {
@@ -93,5 +100,34 @@ void ABattle::PassTurnToNextPlayer() {
   _FighterWhoHasTurn = _Fighters[newIndexOfFIghterWhoHasTurn];
 
   _FighterWhoHasTurn->StartTurn();
+}
+
+AActor* ABattle::GetGemActorByCoordinates(FVector2D coordinates) {
+  FActorByInt* actorByInt = _GemActorsByCoordinates.Find(coordinates.X);
+  if (!actorByInt) {
+    return nullptr;
+  }
+  AActor** resultActorS = actorByInt->ActorByInt.Find(coordinates.Y);
+  if (!resultActorS) {
+    return nullptr;
+  }
+  return *resultActorS;
+
+}
+
+ABoard* ABattle::GetBoard() {
+  return _Board;
+}
+
+void ABattle::AddGemActorToCoordinates(FVector2D coordinates, AActor* actor) {
+    
+  FActorByInt* actorByIntS = _GemActorsByCoordinates.Find(coordinates.X);
+  FActorByInt actorByInt;
+  if (!actorByIntS) {
+    _GemActorsByCoordinates.Add(coordinates.X, actorByInt);
+  }
+
+  _GemActorsByCoordinates[coordinates.X].ActorByInt.Add(coordinates.Y, actor);
+
 }
 

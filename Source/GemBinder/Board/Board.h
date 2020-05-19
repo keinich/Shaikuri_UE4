@@ -52,10 +52,11 @@ public: // UFunctions
   void HoverCell(int x, int y);
   void UnhoverAllCells();
 
-  void PlaceBeast(AActor* beast, int x, int y);
-
   UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
     UBoardCellComponent* GetBoardCell(int x, int y);
+
+  UFUNCTION(BlueprintCallable)
+    TArray<FVector2D> GetCellCoordinates();
 
 public: // UProperties
 
@@ -93,10 +94,6 @@ protected: // UProperties
   UPROPERTY(EditDefaultsOnly, Category = "Board")
     int NumberCellsY = 5;
 
-protected: // Functions
-
-protected: // Fields
-
 private: // Functions
 
   void RecreateGrid();
@@ -113,4 +110,6 @@ private: // Fields
 
   UPROPERTY()
     FVector2D _HoveredCellCoordinates = FVector2D(-1, -1);
+
+  TArray<FVector2D> _CellCoordinates;
 };

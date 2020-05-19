@@ -43,7 +43,11 @@ void UFighterComponent::StartBattle(ABattle* battle) {
 }
 
 void UFighterComponent::DrawStartingHand() {
-  // Do nothing
+
+  // Testweise kompletten Beutel ziehen
+  for (int i = 0; i <= Bag.Num(); ++i) {
+    DrawNextGem();
+  }
 }
 
 void UFighterComponent::StartTurn() {
