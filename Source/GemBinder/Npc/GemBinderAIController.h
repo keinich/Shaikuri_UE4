@@ -24,6 +24,9 @@ class SHAIKURI_API AGemBinderAIController : public AAIController {
 public:
   AGemBinderAIController();
 
+  UFUNCTION()
+    void Tick(float delta) override;
+
 #pragma endregion
 
 #pragma region Components
