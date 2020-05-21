@@ -20,6 +20,12 @@ void AGBPlayerController::BeginPlay() {
  
 }
 
+void AGBPlayerController::OnPossess(APawn* InPawn) {
+  Super::OnPossess(InPawn);
+
+  FighterComponent->TrySetWorldCharacter(InPawn);
+}
+
 #pragma endregion
 
 

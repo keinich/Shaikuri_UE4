@@ -27,6 +27,10 @@ public:
   UFUNCTION()
     void Tick(float delta) override;
 
+protected:
+
+  virtual void OnPossess(APawn* InPawn) override;
+
 #pragma endregion
 
 #pragma region Components

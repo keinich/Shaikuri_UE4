@@ -37,6 +37,18 @@ void UFighterComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 
 #pragma endregion
 
+void UFighterComponent::TrySetWorldCharacter(APawn* InPawn) {
+
+  AWorldCharacter* worldCharacter = Cast<AWorldCharacter, APawn>(InPawn);
+
+  if (!worldCharacter) {
+    return;
+  }
+
+  OwningWorldCharacter = worldCharacter;
+
+}
+
 void UFighterComponent::StartBattle(ABattle* battle) {
   _Battle = battle;
   DrawStartingHand();
@@ -58,9 +70,13 @@ void UFighterComponent::EndTurn() {
   _HasTurn = false;
 }
 
+void UFighterComponent::StartSubmitPlacingGem(FGemDefinition gemDefinition) {
+  
+}
+
 void UFighterComponent::DrawNextGem() {
   FGemDefinition gemDefinition = Bag.Pop();
-  _Hand.Push(gemDefinition);
+  Hand.Push(gemDefinition);
   AfterGemDrawn(gemDefinition);
 }
 

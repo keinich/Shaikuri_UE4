@@ -14,7 +14,10 @@ void UAiFighterComponent::StartTurn() {
 
   for (int i = 0; i < coordinates.Num(); ++i) {
     if (!_Battle->GetGemActorByCoordinates(coordinates[i])) {
-      _Battle->PlaceGem(coordinates[i], _Hand[0]);
+
+      StartSubmitPlacingGem(Hand[0]);
+
+      _Battle->PlaceGem(coordinates[i], Hand[0]);
       _Battle->SubmitTurn(this);
       return;
     }

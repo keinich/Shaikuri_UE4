@@ -9,6 +9,7 @@
 #include "Components/StaticMeshComponent.h"
 
 // Game Includes
+#include "GemDefinition.h"
 
 // Last Include
 
@@ -45,20 +46,17 @@ public:
   UPROPERTY(EditDefaultsOnly)
     UStaticMeshComponent* Mesh;
 
-  UPROPERTY(EditDefaultsOnly, category = "Gem")
-    UWidgetComponent* GemNameWidget;
-
-  UPROPERTY(EditDefaultsOnly, category = "Gem")
-    UWidgetComponent* GemImageWidget;
-
-  UPROPERTY(EditDefaultsOnly, category = "Gem")
-    UWidgetComponent* GemDescriptionWidget;
+  UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, category = "Gem")
+    UWidgetComponent* GemWidget;  
 
 #pragma endregion
 
 public: // UFunctions
 
 public: // UProperties
+
+  UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, category = "Gem")
+    FGemDefinition GemDefinition;
 
 protected: // UFunctions
 

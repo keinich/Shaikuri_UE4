@@ -11,6 +11,12 @@ AGemBinderAIController::AGemBinderAIController() {
 
 }
 
+void AGemBinderAIController::OnPossess(APawn* InPawn) {
+  Super::OnPossess(InPawn);
+
+  FighterComponent->TrySetWorldCharacter(InPawn);  
+}
+
 #pragma endregion
 
 void AGemBinderAIController::Tick(float delta) {

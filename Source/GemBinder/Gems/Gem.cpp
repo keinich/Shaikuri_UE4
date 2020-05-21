@@ -12,15 +12,11 @@ AGem::AGem() {
 
   Capsule = CreateDefaultSubobject<UCapsuleComponent>("Capsule");
   Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
-  GemNameWidget = CreateDefaultSubobject<UWidgetComponent>("Gem Name Widget");
-  GemImageWidget = CreateDefaultSubobject<UWidgetComponent>("Gem Image Widget");
-  GemDescriptionWidget = CreateDefaultSubobject<UWidgetComponent>("Gem Description Widget");
+  GemWidget = CreateDefaultSubobject<UWidgetComponent>("Gem Name Widget");
 
   SetRootComponent(Capsule);
   Mesh->SetupAttachment(Capsule);
-  GemNameWidget->SetupAttachment(Capsule);
-  GemImageWidget->SetupAttachment(Capsule);
-  GemDescriptionWidget->SetupAttachment(Capsule);
+  GemWidget->SetupAttachment(Capsule);
 
 }
 

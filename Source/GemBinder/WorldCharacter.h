@@ -33,4 +33,7 @@ protected: // Functions
 
 protected: // Fields
 
+  UPROPERTY(BlueprintReadWrite, category = "Battle")
+    bool IsPlacingGem;
+
 };

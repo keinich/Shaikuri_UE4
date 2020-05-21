@@ -7,6 +7,7 @@
 #include "Components/ActorComponent.h"
 
 // Game Includes
+#include "WorldCharacter.h"
 #include "Gems/GemDefinition.h"
 
 // Last Include
@@ -44,6 +45,9 @@ protected:
 public: // UFunctions
 
   UFUNCTION()
+    void TrySetWorldCharacter(APawn* InPawn);
+
+  UFUNCTION()
     virtual void StartBattle(ABattle* battle);
 
   UFUNCTION()
@@ -63,25 +67,29 @@ public: // Properties
 protected: // Functions
 
   UFUNCTION()
+    void StartSubmitPlacingGem(FGemDefinition gemDefinition);
+
+  UFUNCTION()
     void DrawNextGem();
 
   UFUNCTION()
     virtual void AfterGemDrawn(FGemDefinition gemDefinition);
 
-protected: // UProperties
+protected: // Properties
 
   UPROPERTY(EditDefaultsOnly, category = "Gem")
     TArray<FGemDefinition> Bag;
 
-protected: // Fields
+  UPROPERTY(EditDefaultsOnly, category = "Gem")
+    TArray<FGemDefinition> Hand;
 
   UPROPERTY()
     ABattle* _Battle;
     
-    bool _HasTurn;
+  UPROPERTY(VisibleAnywhere)
+    class AWorldCharacter* OwningWorldCharacter;
 
-    UPROPERTY(EditDefaultsOnly, category = "Gem")
-      TArray<FGemDefinition> _Hand;
+    bool _HasTurn;
 
 private: // Functions
 

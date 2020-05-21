@@ -32,7 +32,7 @@ class SHAIKURI_API UAiFighterComponent : public UFighterComponent {
 
 #pragma endregion
 
-public: // UFunctions
+public: // UFunctions  
 
   virtual void StartTurn() override;
 

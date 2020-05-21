@@ -27,6 +27,10 @@ public:
 
   virtual void BeginPlay() override;
 
+protected:
+
+  virtual void OnPossess(APawn* InPawn) override;
+
 #pragma endregion
 
 #pragma region Components
