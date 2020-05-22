@@ -36,3 +36,14 @@ AGemService* AGBGameStateBase::GetGemService(const UObject* worldContextObject) 
 
   return gameState->GemService;
 }
+
+AInteractionService* AGBGameStateBase::GetInteractionService(const UObject* worldContextObject) {
+  AGBGameStateBase* gameState = (AGBGameStateBase*)UGameplayStatics::GetGameState(worldContextObject);
+
+  if (!gameState) {
+    UE_LOG(LogTemp, Error, TEXT("Couldnt get GameState"));
+    return nullptr;
+  }
+
+  return gameState->InteractionService;
+}

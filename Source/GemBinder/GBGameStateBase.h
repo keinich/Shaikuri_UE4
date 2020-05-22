@@ -14,6 +14,7 @@
 // Forward Declarations
 class ABattleService;
 class AGemService;
+class AInteractionService;
 
 /**
  *
@@ -46,6 +47,9 @@ public: // UFunctions
   UFUNCTION(BlueprintCallable, category = "Battle")
     static AGemService* GetGemService(const UObject* worldContextObject);
 
+  UFUNCTION(BlueprintCallable, category = "Battle")
+    static AInteractionService* GetInteractionService(const UObject* worldContextObject);
+
 public: // UProperties
 
 protected: // UFunctions
@@ -59,9 +63,11 @@ protected: // UProperties
   UPROPERTY(BlueprintReadWrite)
     ABattleService* BattleService;
 
-  // Services
   UPROPERTY(BlueprintReadWrite)
     AGemService* GemService;
+
+  UPROPERTY(BlueprintReadWrite)
+    AInteractionService* InteractionService;
     
 protected: // Functions
 

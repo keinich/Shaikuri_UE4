@@ -24,5 +24,4 @@ void AGemBinderAIController::Tick(float delta) {
   if (!pawn) {
     return;
   }
-  pawn->AddActorLocalRotation(FRotator(1.0f, 0.0f, 0.0f));
 }

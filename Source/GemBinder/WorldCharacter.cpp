@@ -8,6 +8,7 @@
 #include "MorphableSkeletalMeshComponent.h"
 #include "MeshTraitsComponent.h"
 #include "Battle/BattleService.h"
+#include "Interaction/InteractionService.h"
 
 // Sets default values
 AWorldCharacter::AWorldCharacter() {
@@ -30,15 +31,16 @@ void AWorldCharacter::OnStartPlacingGem(FGemDefinition gemDefinition) {
 void AWorldCharacter::OnInteract_Implementation(AActor* caller) {
   TArray<AController*> controllers;
   controllers.Add(GetController());
+  AInteractionService::StopPresentInteractionText(this);
   ABattleService::StartBattlePlayerAgainstControllers(controllers, this);
 }
 
 void AWorldCharacter::StartFocus_Implementation(AActor* caller) {
-  GEngine->AddOnScreenDebugMessage(-1, 2.5f, FColor::Orange, TEXT("Start Fight"));
+  AInteractionService::PresentInteractionText(FText::FromString("Start Fight"), this);
 }
 
 void AWorldCharacter::EndFocus_Implementation(AActor* caller) {
-  GEngine->AddOnScreenDebugMessage(-1, 2.5f, FColor::Orange, TEXT("End Fight"));
+  AInteractionService::StopPresentInteractionText(this);
 }
 
 // Called when the game starts or when spawned

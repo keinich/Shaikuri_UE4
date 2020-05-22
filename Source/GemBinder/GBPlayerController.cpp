@@ -70,6 +70,12 @@ bool AGBPlayerController::TryGetActorUnderMouse(FHitResult& hitResult) const {
   }
 }
 
+void AGBPlayerController::TryInteract() {
+  if (_CurrentInteractable) {
+    IInteractable::Execute_OnInteract(_CurrentInteractable, this);
+  }
+}
+
 bool AGBPlayerController::TryGetActorTracingForward(FHitResult& hitResult) const {
   FVector start;
   FRotator rotation;

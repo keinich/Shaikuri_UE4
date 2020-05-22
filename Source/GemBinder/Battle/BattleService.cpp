@@ -95,7 +95,7 @@ void ABattleService::StartBattlePlayerAgainsControllersInternal(TArray<AControll
 
   TArray<UFighterComponent*> fighterComponents;
 
-  for (int i = 0; i <= opponents.Num(); ++i) {
+  for (int i = 0; i < opponents.Num(); ++i) {
     UFighterComponent* fighterComponent = (UFighterComponent*)opponents[i]->GetComponentByClass(UFighterComponent::StaticClass());
     fighterComponents.Add(fighterComponent);
   }

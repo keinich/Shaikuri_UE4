@@ -59,6 +59,9 @@ public: // UProperties
 
 protected: // Functions
 
+  UFUNCTION(BlueprintCallable)
+    void TryInteract();
+
 protected: // Properties
 
   UPROPERTY(EditDefaultsOnly)
