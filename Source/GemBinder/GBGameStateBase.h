@@ -15,12 +15,6 @@
 class ABattleService;
 class AGemService;
 
-UENUM()
-enum EGemBinderGameState {
-  OpenWorld,
-  Battle
-};
-
 /**
  *
  */
@@ -52,9 +46,6 @@ public: // UFunctions
   UFUNCTION(BlueprintCallable, category = "Battle")
     static AGemService* GetGemService(const UObject* worldContextObject);
 
-  UFUNCTION(BlueprintCallable)
-    void SetGameState(EGemBinderGameState stateToSet);
-
 public: // UProperties
 
 protected: // UFunctions
@@ -79,7 +70,5 @@ protected: // Fields
 private: // Functions
 
 private: // Fields  
-
-  EGemBinderGameState _CurrentState;
 
 };

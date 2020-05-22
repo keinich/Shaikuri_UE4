@@ -17,13 +17,31 @@ AGBPlayerController::AGBPlayerController() {
 
 void AGBPlayerController::BeginPlay() {
   Super::BeginPlay();
- 
+
+}
+
+void AGBPlayerController::Tick(float deltaTime) {
+  switch (_State) {
+  case EGemBinderPlayerControllerState::OpenWorld:
+    CheckForInteractables();
+  case EGemBinderPlayerControllerState::Battle:
+    return;
+  }
 }
 
 void AGBPlayerController::OnPossess(APawn* InPawn) {
   Super::OnPossess(InPawn);
 
   FighterComponent->TrySetWorldCharacter(InPawn);
+
+  AWorldCharacter* worldCharacter = Cast<AWorldCharacter, APawn>(InPawn);
+
+  if (worldCharacter) {
+    _State = EGemBinderPlayerControllerState::OpenWorld;
+  }
+  else {
+    _State = EGemBinderPlayerControllerState::Battle;
+  }
 }
 
 #pragma endregion
@@ -50,6 +68,18 @@ bool AGBPlayerController::TryGetActorUnderMouse(FHitResult& hitResult) const {
   else {
     return false;
   }
+}
+
+bool AGBPlayerController::TryGetActorTracingForward(FHitResult& hitResult) const {
+  FVector start;
+  FRotator rotation;
+
+  GetPlayerViewPoint(start, rotation);
+  FVector end = start + rotation.Vector() * TraceDistance;
+
+  FCollisionQueryParams params;
+  params.AddIgnoredActor(GetPawn());
+  return GetWorld()->LineTraceSingleByChannel(hitResult, start, end, ECC_Camera, params);
 }
 
 
@@ -83,4 +113,37 @@ bool AGBPlayerController::TryGetActorInLookDirection(FVector lookDirection, FHit
   else {
     return false;
   }
+}
+
+void AGBPlayerController::CheckForInteractables() {
+  FHitResult hitResult;
+  AActor* hitActor = nullptr;
+  if (TryGetActorTracingForward(hitResult)) {
+    hitActor = hitResult.GetActor();
+  }
+
+  IInteractable* hitInteractable = nullptr;
+  if (hitActor) {
+    hitInteractable = Cast<IInteractable>(hitActor);
+  }
+
+  if (!hitInteractable) {
+    if (_CurrentInteractable) {
+      IInteractable::Execute_EndFocus(_CurrentInteractable, this);
+      _CurrentInteractable = nullptr;
+    }
+  }
+  else {
+    if (!_CurrentInteractable) {
+      IInteractable::Execute_StartFocus(hitActor, this);
+      _CurrentInteractable = hitActor;
+    }
+    else if (_CurrentInteractable != hitActor) {
+      IInteractable::Execute_EndFocus(_CurrentInteractable, this);
+      IInteractable::Execute_StartFocus(hitActor, this);
+
+      _CurrentInteractable = hitActor;
+    }
+  }
+
 }

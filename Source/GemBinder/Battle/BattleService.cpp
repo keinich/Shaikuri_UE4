@@ -82,12 +82,25 @@ void ABattleService::StartBattlePlayerAgainsOpponentsInternal(TArray<UFighterCom
   APawn* pawn = playerController->GetPawn();
   FTransform transform = pawn->GetTransform();
   FTransform transformPawn = transform;
-  pawn->Destroy();
+  //pawn->Destroy();
+  
   transformPawn.AddToTranslation(FVector(0, 0, 100.0f));
   ABoardPawn* boardPawn = SpawnBoardPawn(transformPawn);
   playerController->Possess(boardPawn);
 
   StartBattleInternal(opponents, transform);
+}
+
+void ABattleService::StartBattlePlayerAgainsControllersInternal(TArray<AController*> opponents) {
+
+  TArray<UFighterComponent*> fighterComponents;
+
+  for (int i = 0; i <= opponents.Num(); ++i) {
+    UFighterComponent* fighterComponent = (UFighterComponent*)opponents[i]->GetComponentByClass(UFighterComponent::StaticClass());
+    fighterComponents.Add(fighterComponent);
+  }
+  
+  StartBattlePlayerAgainsOpponentsInternal(fighterComponents);
 }
 
 void ABattleService::StartBattle(
@@ -101,4 +114,8 @@ void ABattleService::StartBattlePlayerAgainstOpponents(
   TArray<UFighterComponent*> opponents, const UObject* worldContextObject
 ) {
   AGBGameStateBase::GetBattleService(worldContextObject)->StartBattlePlayerAgainsOpponentsInternal(opponents);
+}
+
+void ABattleService::StartBattlePlayerAgainstControllers(TArray<AController*> opponents, const UObject* worldContextObject) {
+  AGBGameStateBase::GetBattleService(worldContextObject)->StartBattlePlayerAgainsControllersInternal(opponents);
 }

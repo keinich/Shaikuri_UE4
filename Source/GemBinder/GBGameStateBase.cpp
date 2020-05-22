@@ -15,24 +15,6 @@ void AGBGameStateBase::BeginPlay() {
 
 #pragma endregion
 
-void AGBGameStateBase::SetGameState(EGemBinderGameState stateToSet) {
-  if (_CurrentState == stateToSet) {
-    return;
-  }
-
-  _CurrentState = stateToSet;
-
-  switch (_CurrentState) {
-  case EGemBinderGameState::Battle:
-    
-
-  case EGemBinderGameState::OpenWorld:
-
-  default:
-    return;
-  }
-}
-
 ABattleService* AGBGameStateBase::GetBattleService(const UObject* worldContextObject) {
   AGBGameStateBase* gameState = (AGBGameStateBase*)UGameplayStatics::GetGameState(worldContextObject);
 

@@ -12,6 +12,12 @@
 // Last Include
 #include "GBPlayerController.generated.h"
 
+UENUM()
+enum EGemBinderPlayerControllerState {
+  OpenWorld,
+  Battle
+};
+
 /**
  *
  */
@@ -26,6 +32,8 @@ public:
   AGBPlayerController();
 
   virtual void BeginPlay() override;
+
+  virtual void Tick(float deltaTime) override;
 
 protected:
 
@@ -45,23 +53,31 @@ public:
 public: // UFunctions
 
   UFUNCTION()
-    bool TryGetActorUnderMouse(FHitResult& hitResult) const;
+    bool TryGetActorUnderMouse(FHitResult& hitResult) const;  
 
 public: // UProperties
 
-protected: // UFunctions
-
-protected: // UProperties
-
 protected: // Functions
 
-protected: // Fields
+protected: // Properties
+
+  UPROPERTY(EditDefaultsOnly)
+    float TraceDistance;
 
 private: // Functions 
 
   bool TryGetLookDirection(FVector2D screenPosition, FVector& lookDirection) const;
   bool TryGetActorInLookDirection(FVector lookDirection, FHitResult& hitResult) const;
 
+  UFUNCTION()
+    bool TryGetActorTracingForward(FHitResult& hitResult) const;
+
+  void CheckForInteractables();
+
 private: // Fields  
+
+  EGemBinderPlayerControllerState _State;
+
+  AActor* _CurrentInteractable;
 
 };

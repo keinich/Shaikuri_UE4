@@ -71,7 +71,12 @@ void UFighterComponent::EndTurn() {
 }
 
 void UFighterComponent::StartSubmitPlacingGem(FGemDefinition gemDefinition) {
-  
+  if (!OwningWorldCharacter) {
+    UE_LOG(LogTemp, Error, TEXT("No world character when trying to StartSubmitPlacingGem"));
+    return;
+  }
+
+  OwningWorldCharacter->OnStartPlacingGem(gemDefinition);
 }
 
 void UFighterComponent::DrawNextGem() {

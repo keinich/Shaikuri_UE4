@@ -54,6 +54,9 @@ public: // UFunctions
 
   UFUNCTION(BlueprintCallable, category = "Battle")
     static void StartBattlePlayerAgainstOpponents(TArray<UFighterComponent*> opponents, const UObject* worldContextObject);
+
+  UFUNCTION(BlueprintCallable, category = "Battle")
+    static void StartBattlePlayerAgainstControllers(TArray<AController*> opponents, const UObject* worldContextObject);
   
 public: // UProperties
 
@@ -89,6 +92,9 @@ private: // Functions
 
   UFUNCTION(BlueprintCallable, category = "Battle")
     void StartBattlePlayerAgainsOpponentsInternal(TArray<UFighterComponent*> opponents);
+
+  UFUNCTION(BlueprintCallable, category = "Battle")
+    void StartBattlePlayerAgainsControllersInternal(TArray<AController*> opponents);
 
 private: // Fields
 
