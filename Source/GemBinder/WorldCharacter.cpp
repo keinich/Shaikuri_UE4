@@ -3,6 +3,7 @@
 #include "WorldCharacter.h"
 
 // Engine Includes
+#include "Components/CapsuleComponent.h"
 
 // Game Includes
 #include "MorphableSkeletalMeshComponent.h"
@@ -22,6 +23,8 @@ AWorldCharacter::AWorldCharacter() {
   // Set up Mesh Traits
   MeshTraits = CreateDefaultSubobject<UMeshTraitsComponent>(TEXT("MeshTraits"));
 
+  InteractionCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Interaction Capsule"));
+  InteractionCapsule->SetupAttachment(RootComponent);
 }
 
 void AWorldCharacter::OnStartPlacingGem(FGemDefinition gemDefinition) {

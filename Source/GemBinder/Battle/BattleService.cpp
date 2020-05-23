@@ -7,6 +7,8 @@
 #include "Engine/World.h"
 #include "GameFramework/GameState.h"
 #include "Kismet/GameplayStatics.h"
+#include "Camera/PlayerCameraManager.h"
+#include "Kismet/GameplayStatics.h"
 
 // Game Includes
 #include "Board/BoardPawn.h"
@@ -60,7 +62,7 @@ void ABattleService::StartBattleInternal(TArray<UFighterComponent*> fighters, FT
 
   // Spawn Board
   ABoard* board = SpawnBoard(transform);
-  
+
   // Instantiate Battle
   ABattle* battle = CreateBattle();
   battle->Start(fighters, board);
@@ -82,10 +84,15 @@ void ABattleService::StartBattlePlayerAgainsOpponentsInternal(TArray<UFighterCom
   APawn* pawn = playerController->GetPawn();
   FTransform transform = pawn->GetTransform();
   FTransform transformPawn = transform;
-  //pawn->Destroy();
   
+  UCameraComponent* cam = (UCameraComponent*)pawn->GetComponentByClass(UCameraComponent::StaticClass());
+  FTransform camTransform = cam->GetComponentTransform();
+
   transformPawn.AddToTranslation(FVector(0, 0, 100.0f));
   ABoardPawn* boardPawn = SpawnBoardPawn(transformPawn);
+  boardPawn->TransitionCameraFrom(camTransform);
+  playerController->UnPossess();
+  //UGameplayStatics::GetPlayerCameraManager()->Set
   playerController->Possess(boardPawn);
 
   StartBattleInternal(opponents, transform);
@@ -99,12 +106,12 @@ void ABattleService::StartBattlePlayerAgainsControllersInternal(TArray<AControll
     UFighterComponent* fighterComponent = (UFighterComponent*)opponents[i]->GetComponentByClass(UFighterComponent::StaticClass());
     fighterComponents.Add(fighterComponent);
   }
-  
+
   StartBattlePlayerAgainsOpponentsInternal(fighterComponents);
 }
 
 void ABattleService::StartBattle(
-  TArray<UFighterComponent*> fighters, 
+  TArray<UFighterComponent*> fighters,
   FTransform transform,
   const UObject* worldContextObject) {
   return AGBGameStateBase::GetBattleService(worldContextObject)->StartBattleInternal(fighters, transform);

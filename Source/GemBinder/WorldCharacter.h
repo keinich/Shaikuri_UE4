@@ -41,6 +41,9 @@ public: // Fields
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Traits", meta = (AllowPrivateAccess = "true"))
     class UMeshTraitsComponent* MeshTraits;
 
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Interaction", meta = (AllowPrivateAccess = "true"))
+    class UCapsuleComponent* InteractionCapsule;
+
 #pragma endregion
 
 public: // Functions

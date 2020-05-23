@@ -8,6 +8,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/ChildActorComponent.h"
+#include "Components/TimelineComponent.h"
 
 // Last Include
 #include "BoardPawn.generated.h"
@@ -30,17 +31,20 @@ public:
 
 protected:
 
-    virtual void SetupPlayerInputComponent(UInputComponent* InInputComponent) override;
+  virtual void SetupPlayerInputComponent(UInputComponent* InInputComponent) override;
 
 #pragma endregion
 
 #pragma region Components
 
-    UPROPERTY(EditDefaultsOnly, category = "Camera")
+  UPROPERTY(EditDefaultsOnly, category = "Camera")
     USpringArmComponent* SpringArm;
 
   UPROPERTY(EditDefaultsOnly, category = "Camera")
     UCameraComponent* Camera;
+
+  UPROPERTY(EditDefaultsOnly, Category = "Camera Transition")
+    UTimelineComponent* CamTransitionTimeline;
 
 #pragma endregion
 
@@ -49,18 +53,20 @@ public: // UFunctions
   UFUNCTION()
     void PlaceGemInHand(AGem* gem);
 
+  UFUNCTION()
+    void TransitionCameraFrom(FTransform initialTransform);
+
 public: // UProperties
-
-protected: // UFunctions
-
-protected: // UProperties
 
 protected: // Functions
 
   UPROPERTY(EditDefaultsOnly, category = "Camera")
     float ZoomSpeed = 100.0f;
 
-protected: // Fields
+protected: // Properties
+
+  UPROPERTY(EditAnywhere, Category = "Camera Transition")
+    class UCurveFloat* CamTransitionCurve;
 
 private: // Functions
 
@@ -70,10 +76,24 @@ private: // Functions
   void OnTurn(float axisValue);
   void OnLookUp(float axisValue);
 
+  UFUNCTION()
+    void TimelineFloatReturn(float value);
+
+  UFUNCTION()
+    void OnTimelineFinished();
+
 private: // Fields
 
   bool _IsRotating;
 
   UPROPERTY()
     AGem* _Gem;
+    
+  FOnTimelineFloat InterpFunction;
+  //TODO wtf are the brackets?
+  FOnTimelineEvent TimelineFinished{};
+
+  FTransform _CurrentInitialCamTransform;
+  FTransform _CurrentInitialRelativeCamTransform;
+  FQuat _CurrentTargetRelativeRotation;
 };
