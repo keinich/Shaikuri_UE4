@@ -75,11 +75,11 @@ void ABoardPawn::TimelineFloatReturn(float value) {
   }
   FVector relativeLocation = FMath::Lerp(_CurrentInitialRelativeCamTransform.GetLocation(), FVector(), value);
   FQuat relativeRotation = FMath::Lerp(
-    _CurrentInitialRelativeCamTransform.GetRotation(), 
-    _CurrentTargetRelativeRotation, 
+    _CurrentInitialRelativeCamTransform.GetRotation(),
+    _CurrentTargetRelativeRotation,
     value
   );
-  
+
   FTransform relativeTransform = FTransform();
   relativeTransform.SetLocation(relativeLocation);
   relativeTransform.SetRotation(relativeRotation);
@@ -87,7 +87,9 @@ void ABoardPawn::TimelineFloatReturn(float value) {
   //Camera->SetWorldLocation(FMath::Lerp(_CurrentInitialCamTransform.GetLocation(), FVector(0, 0, 0), value));
 }
 
-void ABoardPawn::OnTimelineFinished() {}
+void ABoardPawn::OnTimelineFinished() {
+  CamTransitionFinished.Broadcast();
+}
 
 void ABoardPawn::OnTurn(float axisValue) {
   if (_IsRotating) {
@@ -99,7 +101,7 @@ void ABoardPawn::OnTurn(float axisValue) {
 void ABoardPawn::PlaceGemInHand(AGem* gem) {
   //gem->SetActorTransform(GetTransform());
   _Gem = gem;
-  //gem->AttachToComponent(Hand, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+  //gem->AttachToComponent(Hand, FAttachmentTransformRules::SnapToTargetNotIncludingScale);  
 }
 
 void ABoardPawn::TransitionCameraFrom(FTransform initialTransform) {

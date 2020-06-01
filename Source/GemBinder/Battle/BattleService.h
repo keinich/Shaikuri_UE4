@@ -58,6 +58,9 @@ public: // UFunctions
   UFUNCTION(BlueprintCallable, category = "Battle")
     static void StartBattlePlayerAgainstControllers(TArray<AController*> opponents, const UObject* worldContextObject);
   
+  UFUNCTION()
+    void Test();
+
 public: // UProperties
 
 protected: // UFunctions

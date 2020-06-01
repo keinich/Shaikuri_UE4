@@ -84,7 +84,7 @@ void ABattleService::StartBattlePlayerAgainsOpponentsInternal(TArray<UFighterCom
   APawn* pawn = playerController->GetPawn();
   FTransform transform = pawn->GetTransform();
   FTransform transformPawn = transform;
-  
+
   UCameraComponent* cam = (UCameraComponent*)pawn->GetComponentByClass(UCameraComponent::StaticClass());
   FTransform camTransform = cam->GetComponentTransform();
 
@@ -92,10 +92,11 @@ void ABattleService::StartBattlePlayerAgainsOpponentsInternal(TArray<UFighterCom
   ABoardPawn* boardPawn = SpawnBoardPawn(transformPawn);
   boardPawn->TransitionCameraFrom(camTransform);
   playerController->UnPossess();
-  //UGameplayStatics::GetPlayerCameraManager()->Set
   playerController->Possess(boardPawn);
+  boardPawn->CamTransitionFinished.AddLambda([opponents, transform, this]() {
+    StartBattleInternal(opponents, transform);
+  });
 
-  StartBattleInternal(opponents, transform);
 }
 
 void ABattleService::StartBattlePlayerAgainsControllersInternal(TArray<AController*> opponents) {
@@ -126,3 +127,5 @@ void ABattleService::StartBattlePlayerAgainstOpponents(
 void ABattleService::StartBattlePlayerAgainstControllers(TArray<AController*> opponents, const UObject* worldContextObject) {
   AGBGameStateBase::GetBattleService(worldContextObject)->StartBattlePlayerAgainsControllersInternal(opponents);
 }
+
+void ABattleService::Test() {}

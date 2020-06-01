@@ -14,7 +14,9 @@
 #include "BoardPawn.generated.h"
 
 // Forward Declarations
-//class AGem
+
+// Delegate Declarations
+DECLARE_MULTICAST_DELEGATE(FCamTransitionFinished);
 
 /**
  *
@@ -56,7 +58,12 @@ public: // UFunctions
   UFUNCTION()
     void TransitionCameraFrom(FTransform initialTransform);
 
+  //UFUNCTION()
+  //  void RegisterCamTransitionFinishedCallback();
+
 public: // UProperties
+
+    FCamTransitionFinished CamTransitionFinished;
 
 protected: // Functions
 
